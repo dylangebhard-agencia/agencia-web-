@@ -261,10 +261,129 @@ section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
 }
 @media(max-width:768px) { section { padding: 72px 24px; } }
 
+/* ── COLORED SECTION WRAPPERS ── */
+.section-dark {
+  background: var(--dark);
+  position: relative;
+}
+.section-gradient {
+  background: linear-gradient(135deg, #F3EDFF 0%, #FDF2F8 50%, #F3EDFF 100%);
+  position: relative;
+}
+.section-purple {
+  background: linear-gradient(135deg, #1a1033 0%, #2d1b69 50%, #1a1033 100%);
+  position: relative;
+}
+.section-purple .section-label { color: var(--pink); }
+.section-purple .section-title { color: #fff; }
+.section-purple .section-title em { color: rgba(255,255,255,0.6); }
+.section-purple .section-body { color: rgba(255,255,255,0.7); }
+
+/* ── ANIMATED GRADIENT BLOBS ── */
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(80px); pointer-events: none; opacity: 0.5;
+  animation: blobFloat 8s ease-in-out infinite alternate;
+}
+.blob-1 {
+  width: 400px; height: 400px; top: -100px; left: -100px;
+  background: radial-gradient(circle, rgba(124,58,237,0.2), transparent 70%);
+}
+.blob-2 {
+  width: 350px; height: 350px; bottom: -80px; right: -80px;
+  background: radial-gradient(circle, rgba(217,70,239,0.15), transparent 70%);
+  animation-delay: -4s;
+}
+.blob-3 {
+  width: 300px; height: 300px; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  background: radial-gradient(circle, rgba(124,58,237,0.1), transparent 70%);
+  animation-delay: -2s;
+}
+@keyframes blobFloat {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -20px) scale(1.05); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
+  100% { transform: translate(10px, -10px) scale(1.02); }
+}
+
 /* ── DIVIDER ── */
 .divider {
   max-width: 1200px; margin: 0 auto;
   height: 1px; background: var(--border);
+}
+
+/* ── TRUST BAR ── */
+.trust-bar {
+  padding: 48px 48px;
+  max-width: 1200px; margin: 0 auto;
+  text-align: center;
+}
+.trust-bar p {
+  font-size: 11px; font-weight: 600; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--white3); margin-bottom: 28px;
+}
+.trust-logos {
+  display: flex; align-items: center; justify-content: center;
+  gap: 40px; flex-wrap: wrap; opacity: 0.5;
+  transition: opacity .3s;
+}
+.trust-logos:hover { opacity: 0.8; }
+.trust-logo {
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: 18px; color: var(--white3);
+  padding: 12px 20px; border-radius: var(--rsm);
+  border: 1px solid var(--border);
+  background: var(--card);
+  transition: all .3s;
+}
+.trust-logo:hover {
+  border-color: var(--border2);
+  color: var(--white2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(124,58,237,0.08);
+}
+
+/* ── FLOATING WHATSAPP ── */
+.whatsapp-float {
+  position: fixed; bottom: 28px; right: 28px;
+  z-index: 999;
+  width: 60px; height: 60px; border-radius: 50%;
+  background: #25D366;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; color: #fff; text-decoration: none;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+  transition: all .3s;
+  animation: whatsappPulse 2s ease-in-out infinite;
+}
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 28px rgba(37,211,102,0.5);
+}
+@keyframes whatsappPulse {
+  0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+  50% { box-shadow: 0 4px 20px rgba(37,211,102,0.4), 0 0 0 12px rgba(37,211,102,0.1); }
+}
+
+/* ── BUTTON SHINE ── */
+.btn-primary {
+  position: relative; overflow: hidden;
+}
+.btn-primary::after {
+  content: '';
+  position: absolute; top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  transition: none;
+  animation: btnShine 3s ease-in-out infinite;
+}
+@keyframes btnShine {
+  0%,100% { left: -100%; }
+  50% { left: 150%; }
+}
+
+/* ── COUNTER ANIMATION ── */
+.counter-animated {
+  transition: all .3s;
 }
 
 /* ── VALUE PROPS ── */
@@ -282,9 +401,13 @@ section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
   transition: all .3s;
 }
 .prop:hover {
-  border-color: var(--border2);
-  box-shadow: 0 8px 24px rgba(124,58,237,0.08);
-  transform: translateY(-3px);
+  border-color: var(--gold);
+  box-shadow: 0 8px 32px rgba(124,58,237,0.12), 0 0 0 1px rgba(124,58,237,0.08);
+  transform: translateY(-5px);
+}
+.section-dark .prop {
+  background: var(--card);
+  border-color: rgba(124,58,237,0.06);
 }
 .prop-icon {
   font-size: 28px; margin-bottom: 20px;
@@ -311,8 +434,9 @@ section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
   transition: all .3s;
 }
 .step:hover {
-  box-shadow: 0 8px 24px rgba(124,58,237,0.08);
-  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(124,58,237,0.12), 0 0 0 1px rgba(124,58,237,0.08);
+  transform: translateY(-5px);
+  border-color: var(--gold);
 }
 .step::after {
   content: '→';
@@ -364,7 +488,7 @@ section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
   background: linear-gradient(90deg, var(--gold), var(--pink));
   opacity: 0; transition: opacity .3s;
 }
-.pack-card:hover { border-color: var(--border2); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(124,58,237,0.1); }
+.pack-card:hover { border-color: var(--gold); transform: translateY(-6px); box-shadow: 0 16px 48px rgba(124,58,237,0.15), 0 0 0 1px rgba(124,58,237,0.1); }
 .pack-card:hover::before { opacity: 1; }
 .pack-card.featured {
   border-color: rgba(124,58,237,0.2);
@@ -570,7 +694,7 @@ section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
   box-shadow: 0 2px 8px rgba(124,58,237,0.04);
   transition: all .3s;
 }
-.testi-card:hover { border-color: var(--border2); box-shadow: 0 8px 24px rgba(124,58,237,0.08); transform: translateY(-2px); }
+.testi-card:hover { border-color: var(--gold); box-shadow: 0 12px 32px rgba(124,58,237,0.12), 0 0 0 1px rgba(124,58,237,0.08); transform: translateY(-4px); }
 .testi-stars {
   display: flex; gap: 3px; margin-bottom: 16px;
   color: var(--gold); font-size: 14px;
@@ -634,13 +758,27 @@ section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
 }
 @media(max-width:768px) { #agendar { padding: 72px 24px; } }
 .agendar-wrap {
-  background: var(--card);
-  border: 1px solid rgba(124,58,237,0.12);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
   border-radius: 20px; padding: 64px;
   text-align: center;
   position: relative; overflow: hidden;
-  box-shadow: 0 4px 24px rgba(124,58,237,0.06);
+  box-shadow: 0 4px 48px rgba(0,0,0,0.2);
+  backdrop-filter: blur(12px);
 }
+.section-purple .agendar-badge {
+  border-color: rgba(217,70,239,0.3);
+  background: rgba(217,70,239,0.1);
+  color: var(--pink);
+}
+.section-purple .agendar-wrap h2 { color: #fff; }
+.section-purple .agendar-wrap p { color: rgba(255,255,255,0.7); }
+.section-purple .calendly-placeholder {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.5);
+}
+.section-purple .calendly-placeholder strong { color: rgba(255,255,255,0.7); }
 @media(max-width:768px) { .agendar-wrap { padding: 40px 24px; } }
 .agendar-wrap::before {
   content: '';
@@ -733,6 +871,8 @@ footer {
   </div>
   <div class="hero-grain"></div>
   <div class="hero-gradient"></div>
+  <div class="blob blob-1" style="opacity:0.4;top:10%;left:-5%"></div>
+  <div class="blob blob-2" style="opacity:0.3;bottom:10%;right:-5%"></div>
   <div class="hero-content">
     <div class="hero-badge">Pichilemu · San Vicente · Rengo · Santiago y más</div>
     <h1 class="hero-title">
@@ -741,24 +881,37 @@ footer {
       <span class="stroke">brillar</span>
     </h1>
     <p class="hero-sub">
-      Contenido audiovisual profesional que atrae nuevos clientes — reels, fotografía y gestión de redes para negocios que quieren crecer.
+      Creamos reels, fotografía y gestionamos tus redes para que lleguen clientes reales. Ya lo hacemos en Santiago, Pichilemu, San Vicente y Rengo — tu negocio puede ser el próximo.
     </p>
     <div class="hero-actions">
       <a href="#agendar" class="btn-primary">Agendar llamada gratis</a>
       <a href="#packs" class="btn-ghost">Ver los packs →</a>
     </div>
     <div class="hero-stats">
-      <div class="stat"><div class="stat-n">3</div><div class="stat-l">Reels / mes</div></div>
+      <div class="stat"><div class="stat-n counter" data-target="3" data-suffix="">0</div><div class="stat-l">Reels / mes</div></div>
       <div class="stat-div"></div>
-      <div class="stat"><div class="stat-n">6</div><div class="stat-l">Posts / mes</div></div>
+      <div class="stat"><div class="stat-n counter" data-target="6" data-suffix="">0</div><div class="stat-l">Posts / mes</div></div>
       <div class="stat-div"></div>
-      <div class="stat"><div class="stat-n">4+</div><div class="stat-l">Regiones</div></div>
+      <div class="stat"><div class="stat-n counter" data-target="4" data-suffix="+">0</div><div class="stat-l">Regiones</div></div>
     </div>
   </div>
   <div class="hero-scroll"><div class="scroll-line"></div></div>
 </section>
 
+<!-- TRUST BAR -->
+<div class="trust-bar reveal">
+  <p>Negocios que confían en nosotros</p>
+  <div class="trust-logos">
+    <div class="trust-logo">Clínica Dental Centro</div>
+    <div class="trust-logo">Estética Molar</div>
+    <div class="trust-logo">Comercio San Vicente</div>
+    <div class="trust-logo">Centro Médico Rengo</div>
+    <div class="trust-logo">Spa Pichilemu</div>
+  </div>
+</div>
+
 <!-- VALOR -->
+<div class="section-dark">
 <div class="divider"></div>
 <section id="valor" class="reveal">
   <span class="section-label">Por qué elegirnos</span>
@@ -781,6 +934,8 @@ footer {
     </div>
   </div>
 </section>
+
+</div><!-- /section-dark -->
 
 <!-- COMO FUNCIONA -->
 <div class="divider"></div>
@@ -810,6 +965,9 @@ footer {
 </section>
 
 <!-- PACKS -->
+<div class="section-gradient" style="overflow:hidden">
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
 <div class="divider"></div>
 <section id="packs" class="reveal">
   <span class="section-label">Nuestros planes</span>
@@ -873,20 +1031,20 @@ footer {
 </section>
 
 <!-- ROI CALC -->
-<section id="roi" class="reveal">
+<section id="roi" class="reveal" style="position:relative;z-index:1">
   <span class="section-label">Calculadora ROI</span>
-  <h2 class="section-title">¿Cuánto vale<br><em>un paciente nuevo?</em></h2>
-  <p class="section-body" style="margin:16px 0 40px">Mueve los sliders y descubre en segundos si el pack se paga solo con tu clínica.</p>
+  <h2 class="section-title">¿Cuánto vale<br><em>un cliente nuevo?</em></h2>
+  <p class="section-body" style="margin:16px 0 40px">Mueve los sliders y descubre en segundos si el pack se paga solo con tu negocio.</p>
   <div class="roi-card">
     <div class="roi-grid">
       <div class="roi-inputs">
         <div class="roi-field">
-          <label>Precio promedio por tratamiento</label>
+          <label>Precio promedio por servicio</label>
           <span class="roi-val" id="rv-ticket">$180k</span>
           <input type="range" id="r-ticket" min="30" max="500" value="180" step="10">
         </div>
         <div class="roi-field">
-          <label>Pacientes nuevos que esperas / mes</label>
+          <label>Clientes nuevos que esperas / mes</label>
           <span class="roi-val" id="rv-pacs">5</span>
           <input type="range" id="r-pacs" min="1" max="30" value="5" step="1">
         </div>
@@ -901,7 +1059,7 @@ footer {
         <div class="roi-result-n" id="roi-x">3.0x</div>
         <div class="roi-result-x">la inversión</div>
         <div class="roi-breakdown" style="margin-top:28px">
-          <div class="roi-line"><span>Ingreso por pacientes / mes</span><span id="roi-income">$900k</span></div>
+          <div class="roi-line"><span>Ingreso por clientes / mes</span><span id="roi-income">$900k</span></div>
           <div class="roi-line"><span>Inversión en el pack</span><span id="roi-inv">−$300k</span></div>
           <div class="roi-line"><span>🟢 Ganancia neta estimada</span><span id="roi-net">$600k</span></div>
         </div>
@@ -910,7 +1068,10 @@ footer {
   </div>
 </section>
 
+</div><!-- /section-gradient -->
+
 <!-- PORTFOLIO -->
+<div class="section-dark">
 <div class="divider"></div>
 <section id="portfolio" class="reveal">
   <span class="section-label">Nuestro trabajo</span>
@@ -979,6 +1140,8 @@ footer {
   </div>
 </section>
 
+</div><!-- /section-dark -->
+
 <!-- TESTIMONIOS -->
 <div class="divider"></div>
 <section id="testimonios" class="reveal">
@@ -1013,6 +1176,7 @@ footer {
 </section>
 
 <!-- FAQ -->
+<div class="section-dark">
 <div class="divider"></div>
 <section id="faq" class="reveal">
   <span class="section-label">Preguntas frecuentes</span>
@@ -1070,7 +1234,13 @@ footer {
   </div>
 </section>
 
+</div><!-- /section-dark -->
+
 <!-- AGENDAR -->
+<div class="section-purple" style="overflow:hidden">
+<div class="blob blob-1" style="opacity:0.3"></div>
+<div class="blob blob-2" style="opacity:0.3"></div>
+<div class="blob blob-3" style="opacity:0.2"></div>
 <section id="agendar" class="reveal">
   <div class="agendar-wrap">
     <div class="agendar-badge">📅 Reunión 100% gratis · 30 minutos</div>
@@ -1087,6 +1257,13 @@ footer {
     </div>
   </div>
 </section>
+
+</div><!-- /section-purple -->
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/56XXXXXXXXX?text=Hola%2C%20quiero%20más%20info%20sobre%20los%20packs" class="whatsapp-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+  💬
+</a>
 
 <!-- FOOTER -->
 <footer>
@@ -1175,6 +1352,44 @@ updateRoi();
 const style = document.createElement('style');
 style.textContent = '@media(max-width:900px){.packs-grid{grid-template-columns:1fr!important}}';
 document.head.appendChild(style);
+
+// Counter animation
+function animateCounters() {
+  document.querySelectorAll('.counter').forEach(counter => {
+    if (counter.dataset.done) return;
+    const target = parseInt(counter.dataset.target);
+    const suffix = counter.dataset.suffix || '';
+    const duration = 1500;
+    const start = performance.now();
+    function update(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(eased * target);
+      counter.textContent = current + suffix;
+      if (progress < 1) requestAnimationFrame(update);
+      else counter.dataset.done = '1';
+    }
+    requestAnimationFrame(update);
+  });
+}
+
+const counterObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { animateCounters(); counterObs.unobserve(e.target); }
+  });
+}, { threshold: 0.5 });
+const heroStats = document.querySelector('.hero-stats');
+if (heroStats) counterObs.observe(heroStats);
+
+// Parallax blobs on scroll
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  document.querySelectorAll('.blob').forEach((blob, i) => {
+    const speed = (i % 3 + 1) * 0.03;
+    blob.style.transform = 'translateY(' + (y * speed) + 'px)';
+  });
+}, { passive: true });
 </script>
 </body>
 </html>
