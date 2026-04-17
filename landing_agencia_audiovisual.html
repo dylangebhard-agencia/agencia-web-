@@ -11,7 +11,7 @@
 
 :root {
   --black: #FAF7FF;
-  --dark: #F3EDFF;
+  --dark: #EBE0FF;
   --card: #ffffff;
   --border: rgba(124,58,237,0.08);
   --border2: rgba(124,58,237,0.15);
@@ -26,6 +26,10 @@
   --green-dim: rgba(16,185,129,0.08);
   --pink: #D946EF;
   --pink-dim: rgba(217,70,239,0.06);
+  --amber: #F59E0B;
+  --amber-dim: rgba(245,158,11,0.12);
+  --cyan: #06B6D4;
+  --cyan-dim: rgba(6,182,212,0.12);
   --r: 14px;
   --rsm: 10px;
 }
@@ -126,8 +130,15 @@ nav.scrolled {
 }
 .hero-video-placeholder {
   width: 100%; height: 100%;
-  background: linear-gradient(135deg, #F3EDFF 0%, #FAF7FF 40%, #FDF2F8 100%);
+  background: linear-gradient(135deg, #E5D5FF 0%, #EBE0FF 25%, #FCE7F3 50%, #FEF3C7 75%, #E5D5FF 100%);
+  background-size: 300% 300%;
+  animation: heroGradientShift 12s ease infinite;
   display: flex; align-items: center; justify-content: center;
+}
+@keyframes heroGradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 .hero-grain {
   position: absolute; inset: 0; z-index: 1;
@@ -263,47 +274,139 @@ section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
 
 /* ── COLORED SECTION WRAPPERS ── */
 .section-dark {
-  background: var(--dark);
+  background: linear-gradient(180deg, #EBE0FF 0%, #E5D5FF 100%);
   position: relative;
+  overflow: hidden;
 }
 .section-gradient {
-  background: linear-gradient(135deg, #F3EDFF 0%, #FDF2F8 50%, #F3EDFF 100%);
+  background: linear-gradient(135deg, #E5D5FF 0%, #FCE7F3 50%, #FEF3C7 100%);
   position: relative;
+  overflow: hidden;
 }
 .section-purple {
-  background: linear-gradient(135deg, #1a1033 0%, #2d1b69 50%, #1a1033 100%);
+  background: linear-gradient(135deg, #0F0524 0%, #3B1373 40%, #6D28D9 70%, #3B1373 100%);
   position: relative;
+  overflow: hidden;
 }
-.section-purple .section-label { color: var(--pink); }
+.section-purple .section-label { color: var(--amber); }
 .section-purple .section-title { color: #fff; }
 .section-purple .section-title em { color: rgba(255,255,255,0.6); }
 .section-purple .section-body { color: rgba(255,255,255,0.7); }
 
-/* ── ANIMATED GRADIENT BLOBS ── */
+/* Grid pattern overlay */
+.section-dark::before, .section-gradient::before, .section-purple::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(124,58,237,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,58,237,0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  opacity: 0.5;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 100%);
+}
+.section-purple::before {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+}
+
+/* ── ANIMATED GRADIENT BLOBS (MÁS GRANDES Y VISIBLES) ── */
 .blob {
   position: absolute; border-radius: 50%;
-  filter: blur(80px); pointer-events: none; opacity: 0.5;
-  animation: blobFloat 8s ease-in-out infinite alternate;
+  filter: blur(60px); pointer-events: none;
+  animation: blobFloat 10s ease-in-out infinite alternate;
+  z-index: 0;
 }
 .blob-1 {
-  width: 400px; height: 400px; top: -100px; left: -100px;
-  background: radial-gradient(circle, rgba(124,58,237,0.2), transparent 70%);
+  width: 600px; height: 600px; top: -150px; left: -150px;
+  background: radial-gradient(circle, rgba(124,58,237,0.45), transparent 65%);
+  opacity: 0.9;
 }
 .blob-2 {
-  width: 350px; height: 350px; bottom: -80px; right: -80px;
-  background: radial-gradient(circle, rgba(217,70,239,0.15), transparent 70%);
+  width: 550px; height: 550px; bottom: -120px; right: -120px;
+  background: radial-gradient(circle, rgba(217,70,239,0.4), transparent 65%);
   animation-delay: -4s;
+  opacity: 0.85;
 }
 .blob-3 {
-  width: 300px; height: 300px; top: 50%; left: 50%; transform: translate(-50%,-50%);
-  background: radial-gradient(circle, rgba(124,58,237,0.1), transparent 70%);
+  width: 450px; height: 450px; top: 40%; left: 30%;
+  background: radial-gradient(circle, rgba(245,158,11,0.3), transparent 65%);
   animation-delay: -2s;
+  opacity: 0.7;
 }
+.blob-4 {
+  width: 500px; height: 500px; top: 20%; right: 20%;
+  background: radial-gradient(circle, rgba(6,182,212,0.3), transparent 65%);
+  animation-delay: -6s;
+  opacity: 0.6;
+}
+.section-purple .blob-1 { background: radial-gradient(circle, rgba(217,70,239,0.6), transparent 65%); }
+.section-purple .blob-2 { background: radial-gradient(circle, rgba(245,158,11,0.35), transparent 65%); }
+.section-purple .blob-3 { background: radial-gradient(circle, rgba(6,182,212,0.3), transparent 65%); }
+
 @keyframes blobFloat {
   0% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(30px, -20px) scale(1.05); }
-  66% { transform: translate(-20px, 20px) scale(0.95); }
-  100% { transform: translate(10px, -10px) scale(1.02); }
+  25% { transform: translate(60px, -40px) scale(1.1); }
+  50% { transform: translate(-40px, 50px) scale(0.95); }
+  75% { transform: translate(30px, 30px) scale(1.05); }
+  100% { transform: translate(-20px, -30px) scale(1.08); }
+}
+
+/* ── SILUETAS AUDIOVISUALES ── */
+.silhouette {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.06;
+  z-index: 0;
+}
+.silhouette svg { width: 100%; height: 100%; }
+.sil-play { width: 200px; height: 200px; top: 10%; right: 8%; color: var(--gold); animation: slowSpin 40s linear infinite; }
+.sil-camera { width: 180px; height: 180px; bottom: 12%; left: 6%; color: var(--pink); animation: slowFloat 12s ease-in-out infinite alternate; }
+.sil-wave { width: 300px; height: 80px; top: 30%; left: 4%; color: var(--amber); opacity: 0.1; }
+.sil-aperture { width: 220px; height: 220px; bottom: 8%; right: 5%; color: var(--gold); animation: slowSpin 60s linear infinite reverse; }
+.sil-film { width: 240px; height: 80px; top: 18%; left: 30%; color: var(--pink); opacity: 0.08; }
+.section-purple .silhouette { opacity: 0.08; }
+
+@keyframes slowSpin { to { transform: rotate(360deg); } }
+@keyframes slowFloat {
+  0% { transform: translate(0,0) rotate(-5deg); }
+  100% { transform: translate(20px,-30px) rotate(5deg); }
+}
+
+/* ── CIUDADES TICKER ── */
+.cities-ticker {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  z-index: 3;
+  padding: 14px 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(124,58,237,0.06) 50%, transparent 100%);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+}
+.cities-track {
+  display: flex; gap: 48px;
+  animation: tickerScroll 30s linear infinite;
+  white-space: nowrap;
+  width: max-content;
+}
+.cities-track span {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px; font-weight: 600; letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--white2);
+  display: inline-flex; align-items: center; gap: 14px;
+}
+.cities-track span::after {
+  content: '✦';
+  color: var(--gold);
+  font-size: 10px;
+}
+@keyframes tickerScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
 /* ── DIVIDER ── */
@@ -380,6 +483,43 @@ section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
   0%,100% { left: -100%; }
   50% { left: 150%; }
 }
+
+/* ── ROI PACK TOGGLE ── */
+.roi-pack-toggle {
+  display: flex; gap: 12px;
+}
+.roi-pack-btn {
+  flex: 1; padding: 16px 20px;
+  border-radius: var(--rsm);
+  border: 2px solid var(--border2);
+  background: var(--card);
+  cursor: pointer;
+  transition: all .3s;
+  text-align: center;
+}
+.roi-pack-btn:hover {
+  border-color: var(--gold);
+  box-shadow: 0 4px 16px rgba(124,58,237,0.1);
+}
+.roi-pack-btn.active {
+  border-color: var(--gold);
+  background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(217,70,239,0.06));
+  box-shadow: 0 4px 20px rgba(124,58,237,0.15);
+}
+.roi-pack-btn .pack-btn-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px; font-weight: 700;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.roi-pack-btn .pack-btn-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  background: linear-gradient(135deg, var(--gold), var(--pink));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.roi-pack-btn.active .pack-btn-name { color: var(--gold); }
 
 /* ── COUNTER ANIMATION ── */
 .counter-animated {
@@ -871,10 +1011,14 @@ footer {
   </div>
   <div class="hero-grain"></div>
   <div class="hero-gradient"></div>
-  <div class="blob blob-1" style="opacity:0.4;top:10%;left:-5%"></div>
-  <div class="blob blob-2" style="opacity:0.3;bottom:10%;right:-5%"></div>
+  <div class="blob blob-1" style="top:10%;left:-10%"></div>
+  <div class="blob blob-2" style="bottom:10%;right:-10%"></div>
+  <div class="blob blob-4" style="top:30%;right:5%;width:350px;height:350px;opacity:0.4"></div>
+  <!-- Siluetas audiovisuales -->
+  <div class="silhouette sil-play"><svg viewBox="0 0 100 100" fill="currentColor"><polygon points="20,10 20,90 85,50"/></svg></div>
+  <div class="silhouette sil-camera"><svg viewBox="0 0 100 80" fill="currentColor"><rect x="5" y="20" width="65" height="50" rx="8"/><polygon points="75,30 95,20 95,60 75,50"/><circle cx="35" cy="45" r="15" fill="none" stroke="currentColor" stroke-width="4"/></svg></div>
   <div class="hero-content">
-    <div class="hero-badge">Pichilemu · San Vicente · Rengo · Santiago y más</div>
+    <div class="hero-badge">🎬 Agencia audiovisual · Contenido que convierte</div>
     <h1 class="hero-title">
       Tu negocio<br>
       <span class="accent">merece</span><br>
@@ -896,6 +1040,13 @@ footer {
     </div>
   </div>
   <div class="hero-scroll"><div class="scroll-line"></div></div>
+  <!-- CITIES TICKER -->
+  <div class="cities-ticker">
+    <div class="cities-track">
+      <span>Santiago</span><span>Pichilemu</span><span>San Vicente</span><span>Rengo</span><span>Rancagua</span><span>Viña del Mar</span><span>Valparaíso</span><span>Chile</span>
+      <span>Santiago</span><span>Pichilemu</span><span>San Vicente</span><span>Rengo</span><span>Rancagua</span><span>Viña del Mar</span><span>Valparaíso</span><span>Chile</span>
+    </div>
+  </div>
 </section>
 
 <!-- TRUST BAR -->
@@ -912,6 +1063,8 @@ footer {
 
 <!-- VALOR -->
 <div class="section-dark">
+<div class="blob blob-3" style="top:-10%;right:-5%;width:400px;height:400px"></div>
+<div class="silhouette" style="width:160px;height:160px;top:15%;right:10%;opacity:0.05;animation:slowSpin 50s linear infinite"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="50" cy="50" r="15" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="50" y1="5" x2="50" y2="95" stroke="currentColor" stroke-width="1"/><line x1="5" y1="50" x2="95" y2="50" stroke="currentColor" stroke-width="1"/></svg></div>
 <div class="divider"></div>
 <section id="valor" class="reveal">
   <span class="section-label">Por qué elegirnos</span>
@@ -968,6 +1121,9 @@ footer {
 <div class="section-gradient" style="overflow:hidden">
 <div class="blob blob-1"></div>
 <div class="blob blob-2"></div>
+<div class="blob blob-3" style="top:60%;left:10%"></div>
+<div class="silhouette sil-wave"><svg viewBox="0 0 300 60" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M0,30 Q25,5 50,30 T100,30 T150,30 T200,30 T250,30 T300,30"/></svg></div>
+<div class="silhouette" style="width:140px;height:140px;bottom:10%;right:8%;opacity:0.05;animation:slowSpin 45s linear infinite reverse"><svg viewBox="0 0 100 100" fill="currentColor"><polygon points="50,5 61,35 95,35 68,55 78,90 50,68 22,90 32,55 5,35 39,35"/></svg></div>
 <div class="divider"></div>
 <section id="packs" class="reveal">
   <span class="section-label">Nuestros planes</span>
@@ -1050,8 +1206,16 @@ footer {
         </div>
         <div class="roi-field">
           <label>Pack contratado</label>
-          <span class="roi-val" id="rv-pack">$390k</span>
-          <input type="range" id="r-pack" min="390" max="490" value="390" step="100">
+          <div class="roi-pack-toggle">
+            <button class="roi-pack-btn active" data-pack="390" onclick="selectPack(this)">
+              <div class="pack-btn-name">Presencia</div>
+              <div class="pack-btn-price">$390k</div>
+            </button>
+            <button class="roi-pack-btn" data-pack="490" onclick="selectPack(this)">
+              <div class="pack-btn-name">Marketing</div>
+              <div class="pack-btn-price">$490k</div>
+            </button>
+          </div>
         </div>
       </div>
       <div class="roi-result">
@@ -1072,6 +1236,9 @@ footer {
 
 <!-- PORTFOLIO -->
 <div class="section-dark">
+<div class="blob blob-2" style="top:-10%;left:-8%;width:500px;height:500px"></div>
+<div class="blob blob-4" style="bottom:-10%;right:-5%;width:400px;height:400px"></div>
+<div class="silhouette" style="width:200px;height:60px;top:20%;right:12%;opacity:0.04"><svg viewBox="0 0 200 50" fill="currentColor"><rect x="0" y="0" width="30" height="50" rx="3"/><rect x="35" y="0" width="30" height="50" rx="3"/><rect x="70" y="0" width="30" height="50" rx="3"/><rect x="105" y="0" width="30" height="50" rx="3"/><rect x="140" y="0" width="30" height="50" rx="3"/><rect x="175" y="0" width="25" height="50" rx="3"/></svg></div>
 <div class="divider"></div>
 <section id="portfolio" class="reveal">
   <span class="section-label">Nuestro trabajo</span>
@@ -1177,6 +1344,8 @@ footer {
 
 <!-- FAQ -->
 <div class="section-dark">
+<div class="blob blob-1" style="top:-15%;right:-10%;width:450px;height:450px;opacity:0.7"></div>
+<div class="silhouette" style="width:120px;height:120px;bottom:15%;left:8%;opacity:0.04;animation:slowFloat 14s ease-in-out infinite alternate"><svg viewBox="0 0 100 100" fill="currentColor"><rect x="10" y="10" width="80" height="80" rx="12"/><circle cx="50" cy="45" r="18" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="3"/><polygon points="44,38 60,45 44,52" fill="rgba(255,255,255,0.5)"/></svg></div>
 <div class="divider"></div>
 <section id="faq" class="reveal">
   <span class="section-label">Preguntas frecuentes</span>
@@ -1238,9 +1407,11 @@ footer {
 
 <!-- AGENDAR -->
 <div class="section-purple" style="overflow:hidden">
-<div class="blob blob-1" style="opacity:0.3"></div>
-<div class="blob blob-2" style="opacity:0.3"></div>
-<div class="blob blob-3" style="opacity:0.2"></div>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+<div class="silhouette sil-aperture"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="2"/><path d="M50,5 L58,42 L95,30 L62,50 L95,70 L58,58 L50,95 L42,58 L5,70 L38,50 L5,30 L42,42Z" opacity="0.5"/></svg></div>
+<div class="silhouette" style="width:160px;height:160px;top:10%;left:8%;opacity:0.06;animation:slowSpin 55s linear infinite"><svg viewBox="0 0 100 100" fill="currentColor"><polygon points="50,5 61,35 95,35 68,55 78,90 50,68 22,90 32,55 5,35 39,35"/></svg></div>
 <section id="agendar" class="reveal">
   <div class="agendar-wrap">
     <div class="agendar-badge">📅 Reunión 100% gratis · 30 minutos</div>
@@ -1317,18 +1488,23 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 });
 
 // ROI Calc
+let selectedPack = 390;
 function fmtK(n) { return '$' + Math.round(n).toLocaleString('es-CL') + 'k'; }
+function selectPack(btn) {
+  document.querySelectorAll('.roi-pack-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedPack = parseInt(btn.dataset.pack);
+  updateRoi();
+}
 function updateRoi() {
   const ticket = parseInt(document.getElementById('r-ticket').value);
   const pacs   = parseInt(document.getElementById('r-pacs').value);
-  const pack   = parseInt(document.getElementById('r-pack').value);
+  const pack   = selectedPack;
 
   document.getElementById('rv-ticket').textContent = fmtK(ticket);
   document.getElementById('rv-pacs').textContent   = pacs;
-  document.getElementById('rv-pack').textContent   = fmtK(pack);
 
-  // Update range fill
-  ['r-ticket','r-pacs','r-pack'].forEach(id => {
+  ['r-ticket','r-pacs'].forEach(id => {
     const el = document.getElementById(id);
     const pct = ((el.value - el.min) / (el.max - el.min) * 100).toFixed(1) + '%';
     el.style.setProperty('--pct', pct);
@@ -1343,7 +1519,7 @@ function updateRoi() {
   document.getElementById('roi-inv').textContent    = '−' + fmtK(pack);
   document.getElementById('roi-net').textContent    = fmtK(net);
 }
-['r-ticket','r-pacs','r-pack'].forEach(id => {
+['r-ticket','r-pacs'].forEach(id => {
   document.getElementById(id).addEventListener('input', updateRoi);
 });
 updateRoi();
