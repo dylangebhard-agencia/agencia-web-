@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexum Digital · Agencia Audiovisual Santiago</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #FAF7FF;
+  --dark: #EBE0FF;
+  --card: #ffffff;
+  --border: rgba(124,58,237,0.08);
+  --border2: rgba(124,58,237,0.15);
+  --white: #1a1033;
+  --white2: #5c4f73;
+  --white3: #9b8fb0;
+  --gold: #7C3AED;
+  --gold2: #9333EA;
+  --gold-dim: rgba(124,58,237,0.06);
+  --gold-glow: rgba(124,58,237,0.18);
+  --green: #10B981;
+  --green-dim: rgba(16,185,129,0.08);
+  --pink: #D946EF;
+  --pink-dim: rgba(217,70,239,0.06);
+  --amber: #F59E0B;
+  --amber-dim: rgba(245,158,11,0.12);
+  --cyan: #06B6D4;
+  --cyan-dim: rgba(6,182,212,0.12);
+  --r: 14px;
+  --rsm: 10px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 48px;
+  background: rgba(10,10,10,0);
+  backdrop-filter: blur(0px);
+  border-bottom: 1px solid transparent;
+  transition: all .4s;
+}
+nav.scrolled {
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom-color: var(--border);
+  box-shadow: 0 1px 12px rgba(124,58,237,0.06);
+}
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 0.08em;
+  color: var(--white);
+  text-decoration: none;
+}
+.nav-logo span {
+  background: linear-gradient(135deg, var(--gold), var(--pink));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.nav-links { display: flex; gap: 32px; align-items: center; }
+.nav-links a {
+  font-size: 13px; font-weight: 500; letter-spacing: .04em;
+  color: var(--white2); text-decoration: none;
+  transition: color .2s;
+  text-transform: uppercase;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-cta {
+  padding: 10px 22px;
+  background: linear-gradient(135deg, var(--gold), var(--pink));
+  color: #fff !important;
+  border-radius: var(--rsm);
+  font-weight: 700 !important;
+  letter-spacing: .05em;
+  transition: opacity .2s, transform .15s !important;
+}
+.nav-cta:hover { opacity: 0.9; transform: translateY(-1px); }
+@media(max-width:768px) {
+  nav { padding: 18px 24px; }
+  .nav-links { gap: 16px; }
+  .nav-links a:not(.nav-cta) { display: none; }
+}
+
+/* ── HERO INTERACTIVO ── */
+#hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: flex-start; justify-content: center;
+  overflow: hidden;
+  padding: 120px 48px 80px;
+}
+.hero-video-wrap {
+  position: absolute; inset: 0; z-index: 0;
+}
+.hero-video-wrap video {
+  width: 100%; height: 100%; object-fit: cover;
+  opacity: 0.3;
+  filter: saturate(0.7);
+}
+.hero-video-placeholder {
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, #E5D5FF 0%, #EBE0FF 25%, #FCE7F3 50%, #FEF3C7 75%, #E5D5FF 100%);
+  background-size: 300% 300%;
+  animation: heroGradientShift 12s ease infinite;
+}
+@keyframes heroGradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.hero-grain {
+  position: absolute; inset: 0; z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: .12; pointer-events: none;
+}
+.hero-gradient {
+  position: absolute; inset: 0; z-index: 2;
+  background: linear-gradient(to right, rgba(250,247,255,0.95) 0%, rgba(250,247,255,0.85) 50%, transparent 100%);
+}
+.hero-content { position: relative; z-index: 3; max-width: 700px; }
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 16px; border-radius: 99px;
+  border: 1px solid var(--gold);
+  background: var(--gold-dim);
+  font-size: 11px; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 32px;
+  opacity: 0;
+  animation: fadeUp .8s ease both;
+}
+.hero-badge::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold); animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+/* SPLIT TEXT ANIMATION */
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(48px, 10vw, 120px);
+  line-height: .95;
+  letter-spacing: -0.01em;
+  color: var(--white);
+  margin-bottom: 24px;
+}
+.hero-title .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateX(-60px);
+  animation: slideWord 0.8s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+.hero-title .word:nth-child(1) { animation-delay: 0.1s; }
+.hero-title .word:nth-child(2) { animation-delay: 0.2s; }
+.hero-title .word:nth-child(3) { animation-delay: 0.3s; }
+.hero-title .word:nth-child(4) { animation-delay: 0.4s; }
+.hero-title .word:nth-child(5) { animation-delay: 0.5s; }
+.hero-title .word:nth-child(6) { animation-delay: 0.6s; }
+.hero-title .accent {
+  background: linear-gradient(135deg, var(--gold), var(--pink));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+@keyframes slideWord {
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.hero-sub {
+  font-size: clamp(15px, 2vw, 19px);
+  color: var(--white2);
+  font-weight: 300;
+  line-height: 1.65;
+  max-width: 580px; margin: 0 0 40px;
+  opacity: 0;
+  animation: fadeUp 1s .7s ease both;
+}
+
+.hero-actions {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 1s .9s ease both;
+}
+.btn-primary {
+  padding: 18px 42px; border-radius: var(--rsm);
+  background: linear-gradient(135deg, var(--gold), var(--pink));
+  color: #fff;
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: 15px; letter-spacing: .06em; text-transform: uppercase;
+  text-decoration: none; border: none; cursor: pointer;
+  transition: all .2s;
+  box-shadow: 0 4px 24px var(--gold-glow);
+  position: relative; overflow: hidden;
+}
+.btn-primary::after {
+  content: '';
+  position: absolute; top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  animation: btnShine 3s ease-in-out infinite;
+}
+@keyframes btnShine {
+  0%,100% { left: -100%; }
+  50% { left: 150%; }
+}
+.btn-primary:hover { opacity: 0.92; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(124,58,237,0.25); }
+
+/* FOTO INCRUSTADA */
+.hero-photo {
+  position: absolute;
+  right: 8%; top: 50%; transform: translateY(-50%);
+  z-index: 4;
+  width: 420px; height: 520px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(124,58,237,0.25), 0 0 0 1px rgba(255,255,255,0.5);
+  opacity: 0;
+  animation: fadePhotoIn 1.2s 1s ease both;
+}
+@keyframes fadePhotoIn {
+  from { opacity: 0; transform: translateY(-50%) scale(0.9); }
+  to { opacity: 1; transform: translateY(-50%) scale(1); }
+}
+.hero-photo img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+@media(max-width:1200px) {
+  .hero-photo { width: 320px; height: 400px; right: 5%; }
+}
+@media(max-width:900px) {
+  .hero-photo { position: static; transform: none; margin: 40px auto 0; width: 90%; max-width: 400px; height: 480px; }
+  #hero { align-items: center; text-align: center; }
+  .hero-content { max-width: 100%; }
+}
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+/* ELEMENTOS ANIMADOS FLOTANTES */
+.float-element {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+}
+.float-1 {
+  top: 15%; left: -5%;
+  width: 120px; height: 120px;
+  animation: floatIn 1.5s 0.5s ease both, floatMove 8s 2s ease-in-out infinite;
+}
+.float-2 {
+  bottom: 10%; right: -3%;
+  width: 100px; height: 100px;
+  animation: floatIn 1.5s 0.7s ease both, floatMove 10s 2.5s ease-in-out infinite reverse;
+}
+.float-3 {
+  top: 40%; right: 2%;
+  width: 80px; height: 80px;
+  animation: floatIn 1.5s 0.9s ease both, floatMove 12s 3s ease-in-out infinite;
+}
+@keyframes floatIn {
+  from { opacity: 0; transform: translateY(40px) rotate(20deg); }
+  to { opacity: 0.15; transform: translateY(0) rotate(0deg); }
+}
+@keyframes floatMove {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(20px, -15px) rotate(5deg); }
+  50% { transform: translate(-15px, 10px) rotate(-5deg); }
+  75% { transform: translate(10px, 20px) rotate(3deg); }
+}
+
+/* ── SECTIONS ── */
+section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
+.section-label {
+  font-size: 11px; font-weight: 600; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 16px; display: block;
+}
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 800; line-height: 1.1;
+  color: var(--white);
+}
+.section-title em { font-style: italic; font-weight: 400; color: var(--white2); }
+.section-body {
+  font-size: 17px; color: var(--white2); line-height: 1.7;
+  max-width: 560px;
+}
+@media(max-width:768px) { section { padding: 72px 24px; } }
+
+/* ── COLORED SECTION WRAPPERS ── */
+.section-dark {
+  background: linear-gradient(180deg, #EBE0FF 0%, #E5D5FF 100%);
+  position: relative;
+  overflow: hidden;
+}
+.section-gradient {
+  background: linear-gradient(135deg, #E5D5FF 0%, #FCE7F3 50%, #FEF3C7 100%);
+  position: relative;
+  overflow: hidden;
+}
+.section-purple {
+  background: linear-gradient(135deg, #0F0524 0%, #3B1373 40%, #6D28D9 70%, #3B1373 100%);
+  position: relative;
+  overflow: hidden;
+}
+.section-purple .section-label { color: var(--amber); }
+.section-purple .section-title { color: #fff; }
+.section-purple .section-title em { color: rgba(255,255,255,0.6); }
+.section-purple .section-body { color: rgba(255,255,255,0.7); }
+
+/* Grid pattern overlay */
+.section-dark::before, .section-gradient::before, .section-purple::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(124,58,237,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,58,237,0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  opacity: 0.5;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 100%);
+}
+.section-purple::before {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+}
+
+/* BLOBS */
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(60px); pointer-events: none;
+  animation: blobFloat 10s ease-in-out infinite alternate;
+  z-index: 0;
+}
+.blob-1 {
+  width: 600px; height: 600px; top: -150px; left: -150px;
+  background: radial-gradient(circle, rgba(124,58,237,0.45), transparent 65%);
+  opacity: 0.9;
+}
+.blob-2 {
+  width: 550px; height: 550px; bottom: -120px; right: -120px;
+  background: radial-gradient(circle, rgba(217,70,239,0.4), transparent 65%);
+  animation-delay: -4s;
+  opacity: 0.85;
+}
+@keyframes blobFloat {
+  0% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(60px, -40px) scale(1.1); }
+  50% { transform: translate(-40px, 50px) scale(0.95); }
+  75% { transform: translate(30px, 30px) scale(1.05); }
+  100% { transform: translate(-20px, -30px) scale(1.08); }
+}
+
+/* ── DIVIDER ── */
+.divider {
+  max-width: 1200px; margin: 0 auto;
+  height: 1px; background: var(--border);
+}
+
+/* ── TRUST BAR DUAL ── */
+.trust-bar-dual {
+  padding: 56px 48px;
+  max-width: 1200px; margin: 0 auto;
+}
+.trust-section {
+  margin-bottom: 48px;
+}
+.trust-section:last-child { margin-bottom: 0; }
+.trust-section p {
+  font-size: 11px; font-weight: 600; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--white3); margin-bottom: 24px;
+  text-align: center;
+}
+.trust-items {
+  display: flex; align-items: center; justify-content: center;
+  gap: 32px; flex-wrap: wrap;
+}
+.trust-item {
+  font-size: 14px; font-weight: 500;
+  color: var(--white2);
+  padding: 10px 18px; border-radius: 99px;
+  background: var(--card); border: 1px solid var(--border);
+  transition: all .3s;
+}
+.trust-item:hover {
+  border-color: var(--gold);
+  color: var(--white);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(124,58,237,0.08);
+}
+
+/* CITIES TICKER */
+.cities-ticker {
+  padding: 14px 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(124,58,237,0.06) 50%, transparent 100%);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.cities-track {
+  display: flex; gap: 48px;
+  animation: tickerScroll 30s linear infinite;
+  white-space: nowrap;
+  width: max-content;
+}
+.cities-track span {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px; font-weight: 600; letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--white2);
+  display: inline-flex; align-items: center; gap: 14px;
+}
+.cities-track span::after {
+  content: '✦';
+  color: var(--gold);
+  font-size: 10px;
+}
+@keyframes tickerScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ── VALUE PROPS ── */
+#valor { padding-top: 80px; }
+.props-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 16px; margin-top: 56px;
+}
+@media(max-width:768px) { .props-grid { grid-template-columns: 1fr; } }
+.prop {
+  background: var(--card);
+  padding: 40px 36px;
+  border: 1px solid var(--border); border-radius: var(--r);
+  box-shadow: 0 2px 8px rgba(124,58,237,0.04);
+  transition: all .3s;
+}
+.prop:hover {
+  border-color: var(--gold);
+  box-shadow: 0 8px 32px rgba(124,58,237,0.12), 0 0 0 1px rgba(124,58,237,0.08);
+  transform: translateY(-5px);
+}
+.section-dark .prop {
+  background: var(--card);
+  border-color: rgba(124,58,237,0.06);
+}
+.prop-icon {
+  font-size: 28px; margin-bottom: 20px;
+  width: 56px; height: 56px; border-radius: 12px;
+  background: var(--gold-dim); border: 1px solid rgba(124,58,237,0.12);
+  display: flex; align-items: center; justify-content: center;
+}
+.prop h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px; font-weight: 700;
+  color: var(--white); margin-bottom: 12px;
+}
+.prop p { font-size: 14px; color: var(--white2); line-height: 1.7; }
+
+/* SCROLL REVEAL */
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ── HOW IT WORKS ── */
+#como { padding-top: 80px; }
+.steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 56px; position: relative; }
+@media(max-width:768px) { .steps { grid-template-columns: 1fr; } }
+.step {
+  padding: 36px;
+  position: relative;
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--r);
+  box-shadow: 0 2px 8px rgba(124,58,237,0.04);
+  transition: all .3s;
+}
+.step:hover {
+  box-shadow: 0 8px 32px rgba(124,58,237,0.12), 0 0 0 1px rgba(124,58,237,0.08);
+  transform: translateY(-5px);
+  border-color: var(--gold);
+}
+.step::after {
+  content: '→';
+  position: absolute; right: -10px; top: 50%; transform: translateY(-50%);
+  font-size: 24px; color: var(--white3); z-index: 1;
+}
+.step:last-child::after { display: none; }
+@media(max-width:768px) { .step::after { content: '↓'; right: auto; left: 50%; top: auto; bottom: -14px; transform: translateX(-50%); } }
+.step-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 72px; line-height: 1;
+  color: var(--gold-dim);
+  position: absolute; top: 20px; right: 20px;
+  pointer-events: none; user-select: none;
+}
+.step-icon {
+  width: 48px; height: 48px; border-radius: 10px;
+  background: var(--gold-dim); border: 1px solid rgba(124,58,237,0.12);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; margin-bottom: 20px;
+}
+.step h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px; font-weight: 700;
+  color: var(--white); margin-bottom: 10px;
+}
+.step p { font-size: 14px; color: var(--white2); line-height: 1.65; }
+
+/* ── SERVICIOS UNIFICADOS ── */
+#servicios-nexum { padding-top: 80px; }
+.service-tabs {
+  display: flex; gap: 12px; margin-top: 40px; margin-bottom: 48px;
+  justify-content: center;
+}
+.service-tab {
+  padding: 14px 32px; border-radius: 99px;
+  border: 2px solid var(--border2);
+  background: transparent;
+  font-family: 'Syne', sans-serif;
+  font-size: 15px; font-weight: 600;
+  color: var(--white2);
+  cursor: pointer;
+  transition: all .3s;
+}
+.service-tab.active {
+  background: linear-gradient(135deg, var(--gold), var(--pink));
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 4px 20px rgba(124,58,237,0.3);
+}
+.service-tab:not(.active):hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: var(--gold-dim);
+}
+.service-panel {
+  display: none;
+  animation: fadeSlideIn 0.4s ease;
+}
+.service-panel.active { display: block; }
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── PACKS ESTRELLA ── */
+.packs-grid {
+  display: grid; grid-template-columns: repeat(2,1fr);
+  gap: 20px;
+}
+@media(max-width:768px) { .packs-grid { grid-template-columns: 1fr; } }
+.pack-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 40px;
+  position: relative; overflow: hidden;
+  box-shadow: 0 2px 8px rgba(124,58,237,0.04);
+  transition: border-color .3s, transform .3s, box-shadow .3s;
+}
+.pack-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--pink));
+  opacity: 0; transition: opacity .3s;
+}
+.pack-card:hover { border-color: var(--gold); transform: translateY(-6px); box-shadow: 0 16px 48px rgba(124,58,237,0.15), 0 0 0 1px rgba(124,58,237,0.1); }
+.pack-card:hover::before { opacity: 1; }
+.pack-card.featured {
+  border-color: rgba(124,58,237,0.2);
+  background: linear-gradient(135deg, #ffffff 0%, #FAF5FF 100%);
+}
+.pack-card.featured::before { opacity: 1; }
+.pack-tag {
+  display: inline-block;
+  font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  padding: 4px 12px; border-radius: 99px;
+  background: linear-gradient(135deg, var(--gold), var(--pink)); color: #fff;
+  margin-bottom: 20px;
+}
+.pack-tag.popular { background: var(--green); }
+.pack-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 26px; font-weight: 800;
+  color: var(--white); margin-bottom: 6px;
+}
+.pack-sub { font-size: 13px; color: var(--white3); margin-bottom: 28px; }
+.pack-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 64px; line-height: 1;
+  background: linear-gradient(135deg, var(--gold), var(--pink));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: .02em; margin-bottom: 4px;
+}
+.pack-price-sub { font-size: 12px; color: var(--white3); margin-bottom: 32px; }
+.pack-features { list-style: none; margin-bottom: 36px; }
+.pack-features li {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 14px; color: var(--white2);
+  padding: 8px 0; border-bottom: 1px solid var(--border);
+  line-height: 1.5;
+}
+.pack-features li:last-child { border-bottom: none; }
+.pack-features li::before {
+  content: '✓'; color: var(--gold);
+  font-size: 12px; font-weight: 700;
+  flex-shrink: 0; margin-top: 2px;
+}
+.pack-btn {
+  display: block; text-align: center;
+  padding: 14px; border-radius: var(--rsm);
+  background: linear-gradient(135deg, var(--gold), var(--pink)); color: #fff;
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: 13px; letter-spacing: .06em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer;
+  transition: all .2s;
+}
+.pack-btn:hover { opacity: 0.92; transform: translateY(-1px); }
+.pack-btn.ghost {
+  background: transparent; color: var(--white);
+  border: 1px solid var(--border2);
+}
+.pack-btn.ghost:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+.pack-guarantee {
+  background: var(--green-dim); border: 1px solid rgba(16,185,129,0.15);
+  border-radius: var(--rsm); padding: 10px 14px;
+  font-size: 11px; color: var(--green); margin-bottom: 28px;
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 600; letter-spacing: .04em;
+}
+.pack-guarantee::before { content: '✓'; font-size: 14px; }
+
+/* ── SERVICIOS COMPLEMENTARIOS ── */
+.servicios-grid {
+  display: grid; grid-template-columns: repeat(2,1fr);
+  gap: 20px;
+}
+@media(max-width:768px) { .servicios-grid { grid-template-columns: 1fr; } }
+.servicio-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 36px;
+  transition: all .3s;
+  position: relative;
+  overflow: hidden;
+}
+.servicio-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--amber));
+  opacity: 0;
+  transition: opacity .3s;
+}
+.servicio-card:hover {
+  border-color: var(--cyan);
+  box-shadow: 0 12px 32px rgba(6,182,212,0.15);
+  transform: translateY(-4px);
+}
+.servicio-card:hover::before { opacity: 1; }
+.servicio-icon {
+  width: 56px; height: 56px; border-radius: 12px;
+  background: var(--cyan-dim); border: 1px solid rgba(6,182,212,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; margin-bottom: 20px;
+}
+.servicio-badge {
+  display: inline-block;
+  font-size: 10px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 4px 10px; border-radius: 99px;
+  background: var(--cyan-dim);
+  color: var(--cyan);
+  margin-bottom: 16px;
+}
+.servicio-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px; font-weight: 700;
+  color: var(--white); margin-bottom: 12px;
+}
+.servicio-desc {
+  font-size: 14px; color: var(--white2);
+  margin-bottom: 24px; line-height: 1.65;
+}
+.servicio-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 56px; line-height: 1;
+  background: linear-gradient(135deg, var(--cyan), var(--amber));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 6px;
+}
+.servicio-price-sub {
+  font-size: 12px; color: var(--white3); margin-bottom: 24px;
+}
+.servicio-includes {
+  list-style: none;
+  margin-bottom: 28px;
+  padding: 0;
+}
+.servicio-includes li {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 13px; color: var(--white2);
+  padding: 6px 0;
+  line-height: 1.5;
+}
+.servicio-includes li::before {
+  content: '✓';
+  color: var(--cyan);
+  font-size: 12px; font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.servicio-btn {
+  display: block;
+  text-align: center;
+  padding: 12px;
+  border-radius: var(--rsm);
+  background: transparent;
+  border: 1px solid var(--border2);
+  font-family: 'Syne', sans-serif;
+  font-size: 13px; font-weight: 600;
+  color: var(--white);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  transition: all .2s;
+}
+.servicio-btn:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: var(--cyan-dim);
+}
+
+/* ROI CALC */
+#roi { padding-top: 60px; }
+.roi-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 48px;
+  box-shadow: 0 2px 12px rgba(124,58,237,0.04);
+}
+@media(max-width:768px) { .roi-card { padding: 28px 20px; } }
+.roi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+@media(max-width:768px) { .roi-grid { grid-template-columns: 1fr; gap: 32px; } }
+.roi-inputs { display: flex; flex-direction: column; gap: 20px; }
+.roi-field label {
+  display: block; font-size: 12px; font-weight: 600; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--white3); margin-bottom: 8px;
+}
+.roi-field input[type=range] {
+  width: 100%; -webkit-appearance: none; appearance: none;
+  height: 4px; border-radius: 2px; outline: none;
+  background: linear-gradient(to right, var(--gold) var(--pct, 30%), var(--border2) var(--pct, 30%));
+  cursor: pointer;
+}
+.roi-field input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 18px; height: 18px;
+  border-radius: 50%; background: var(--gold);
+  border: 2px solid #fff; cursor: pointer;
+  box-shadow: 0 0 12px var(--gold-glow);
+}
+.roi-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px; color: var(--white); letter-spacing: .02em;
+  float: right; margin-top: -30px;
+}
+.roi-presets {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 8px; margin-bottom: 12px;
+}
+@media(max-width:768px) { .roi-presets { grid-template-columns: 1fr; } }
+.roi-preset-btn {
+  padding: 10px 12px;
+  border: 1px solid var(--border2);
+  border-radius: var(--rsm);
+  background: transparent;
+  font-size: 11px; font-weight: 600;
+  color: var(--white2);
+  cursor: pointer;
+  transition: all .2s;
+  text-align: center;
+}
+.roi-preset-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: var(--gold-dim);
+}
+.roi-result { text-align: center; }
+.roi-result-n {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 88px; line-height: 1;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--pink) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.roi-result-x {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px; color: var(--white2); letter-spacing: .05em;
+}
+.roi-breakdown {
+  margin-top: 24px; display: flex; flex-direction: column; gap: 8px;
+}
+.roi-line {
+  display: flex; justify-content: space-between;
+  font-size: 13px; color: var(--white2);
+  padding: 8px 0; border-bottom: 1px solid var(--border);
+}
+.roi-line:last-child { border-bottom: none; color: var(--green); font-weight: 600; }
+.roi-line span:last-child { font-weight: 600; color: var(--white); }
+.roi-line:last-child span:last-child { color: var(--green); }
+
+/* ── PORTFOLIO ── */
+#portfolio { padding-top: 80px; }
+.portfolio-filter {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-top: 40px; margin-bottom: 32px;
+}
+.filter-btn {
+  padding: 7px 18px; border-radius: 99px;
+  border: 1px solid var(--border2); background: transparent;
+  font-size: 12px; font-weight: 500; color: var(--white2);
+  cursor: pointer; transition: all .2s;
+}
+.filter-btn.active {
+  background: linear-gradient(135deg, var(--gold), var(--pink)); color: #fff; border-color: transparent;
+}
+.portfolio-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 12px;
+}
+@media(max-width:900px) { .portfolio-grid { grid-template-columns: repeat(2,1fr); } }
+@media(max-width:500px) { .portfolio-grid { grid-template-columns: 1fr; } }
+.portfolio-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 9/14;
+  transition: transform .3s;
+  cursor: pointer;
+}
+.portfolio-item:hover { transform: scale(1.02); }
+.portfolio-item:hover .portfolio-overlay { opacity: 1; }
+.portfolio-thumb {
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, #F3EDFF 0%, #FDF2F8 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 48px;
+}
+.portfolio-overlay {
+  position: absolute; inset: 0;
+  background: rgba(26,16,51,0.7);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  opacity: 0; transition: opacity .3s;
+  backdrop-filter: blur(4px);
+  gap: 8px;
+  padding: 20px;
+  text-align: center;
+}
+.portfolio-overlay span { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: #fff; }
+.portfolio-overlay small {
+  font-size: 11px; text-transform: uppercase; letter-spacing: .08em;
+  background: linear-gradient(135deg, var(--gold), var(--pink));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.portfolio-play {
+  width: 52px; height: 52px; border-radius: 50%;
+  border: 2px solid var(--pink); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; margin-bottom: 8px;
+}
+
+/* ── FAQ ── */
+#faq { padding-top: 80px; }
+.faq-list { margin-top: 48px; display: flex; flex-direction: column; gap: 8px; }
+.faq-item {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--rsm); overflow: hidden;
+  box-shadow: 0 1px 4px rgba(124,58,237,0.03);
+  transition: all .3s;
+}
+.faq-item:hover { border-color: var(--border2); }
+.faq-q {
+  padding: 20px 24px;
+  font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 600;
+  color: var(--white); cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center;
+  user-select: none; transition: background .2s;
+}
+.faq-q:hover { background: rgba(124,58,237,0.02); }
+.faq-q .faq-icon {
+  width: 24px; height: 24px; border-radius: 50%;
+  border: 1px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: var(--gold); flex-shrink: 0;
+  transition: transform .3s;
+}
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+.faq-a {
+  max-height: 0; overflow: hidden;
+  transition: max-height .4s ease, padding .3s;
+  padding: 0 24px;
+  font-size: 14px; color: var(--white2); line-height: 1.75;
+}
+.faq-item.open .faq-a { max-height: 400px; padding: 0 24px 20px; }
+
+/* ── GARANTÍA ── */
+.garantia-section {
+  background: var(--green-dim);
+  border: 1px solid rgba(16,185,129,0.15);
+  border-radius: var(--r);
+  padding: 32px;
+  text-align: center;
+  margin-top: 64px;
+}
+.garantia-icon {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: var(--green); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; margin: 0 auto 16px;
+}
+.garantia-section h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 24px; font-weight: 700;
+  color: var(--green); margin-bottom: 8px;
+}
+.garantia-section p {
+  font-size: 15px; color: var(--white2); line-height: 1.6;
+}
+
+/* ── AGENDAR ── */
+#agendar {
+  padding: 100px 48px;
+  max-width: 1200px; margin: 0 auto;
+}
+@media(max-width:768px) { #agendar { padding: 72px 24px; } }
+.agendar-wrap {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px; padding: 64px;
+  text-align: center;
+  position: relative; overflow: hidden;
+  box-shadow: 0 4px 48px rgba(0,0,0,0.2);
+  backdrop-filter: blur(12px);
+}
+.section-purple .agendar-badge {
+  border-color: rgba(217,70,239,0.3);
+  background: rgba(217,70,239,0.1);
+  color: var(--pink);
+}
+.section-purple .agendar-wrap h2 { color: #fff; }
+.section-purple .agendar-wrap p { color: rgba(255,255,255,0.7); }
+@media(max-width:768px) { .agendar-wrap { padding: 40px 24px; } }
+.agendar-wrap::before {
+  content: '';
+  position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+  width: 400px; height: 400px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(124,58,237,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.agendar-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 16px; border-radius: 99px;
+  border: 1px solid rgba(124,58,237,0.2);
+  background: var(--gold-dim);
+  font-size: 11px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 28px;
+}
+.agendar-wrap h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(48px, 8vw, 96px);
+  line-height: .95; color: var(--white);
+  margin-bottom: 20px;
+}
+.agendar-wrap p {
+  font-size: 17px; color: var(--white2); line-height: 1.65;
+  max-width: 480px; margin: 0 auto 40px;
+}
+.agendar-urgency {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 16px; border-radius: 99px;
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.2);
+  font-size: 12px; font-weight: 600; color: var(--amber);
+  margin-bottom: 24px;
+}
+.agendar-urgency::before { content: '⚡'; font-size: 14px; }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 20px;
+  max-width: 1200px; margin: 0 auto;
+  font-size: 13px; color: var(--white3);
+}
+.footer-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px; color: var(--white);
+  text-decoration: none; letter-spacing: .06em;
+}
+.footer-logo span {
+  background: linear-gradient(135deg, var(--gold), var(--pink));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { color: var(--white3); text-decoration: none; transition: color .2s; }
+.footer-links a:hover { color: var(--gold); }
+
+/* ── WHATSAPP FLOAT ── */
+.whatsapp-float {
+  position: fixed; bottom: 28px; right: 28px;
+  z-index: 999;
+  width: 60px; height: 60px; border-radius: 50%;
+  background: #25D366;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; color: #fff; text-decoration: none;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+  transition: all .3s;
+  animation: whatsappPulse 2s ease-in-out infinite;
+}
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 28px rgba(37,211,102,0.5);
+}
+@keyframes whatsappPulse {
+  0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+  50% { box-shadow: 0 4px 20px rgba(37,211,102,0.4), 0 0 0 12px rgba(37,211,102,0.1); }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Nexum Digital<span>.</span></a>
+  <div class="nav-links">
+    <a href="#como">Cómo funciona</a>
+    <a href="#packs-estrella">Servicios</a>
+    <a href="#portfolio">Portafolio</a>
+    <a href="#agendar" class="nav-cta">Agenda gratis →</a>
+  </div>
+</nav>
+
+<!-- HERO INTERACTIVO -->
+<section id="hero">
+  <div class="hero-video-wrap">
+    <!-- AQUÍ VA TU VIDEO: Reemplaza este div con <video autoplay muted loop playsinline src="tu-video.mp4"></video> -->
+    <div class="hero-video-placeholder"></div>
+  </div>
+  <div class="hero-grain"></div>
+  <div class="hero-gradient"></div>
+  
+  <!-- Elementos flotantes animados -->
+  <div class="float-element float-1">
+    <svg viewBox="0 0 100 100" fill="currentColor" style="color: var(--gold);">
+      <polygon points="20,10 20,90 85,50"/>
+    </svg>
+  </div>
+  <div class="float-element float-2">
+    <svg viewBox="0 0 100 80" fill="currentColor" style="color: var(--pink);">
+      <rect x="5" y="20" width="65" height="50" rx="8"/>
+      <polygon points="75,30 95,20 95,60 75,50"/>
+      <circle cx="35" cy="45" r="15" fill="none" stroke="currentColor" stroke-width="4"/>
+    </svg>
+  </div>
+  <div class="float-element float-3">
+    <svg viewBox="0 0 100 100" fill="currentColor" style="color: var(--amber);">
+      <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="3"/>
+      <circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" stroke-width="2"/>
+      <circle cx="50" cy="50" r="15" fill="none" stroke="currentColor" stroke-width="1.5"/>
+    </svg>
+  </div>
+  
+  <div class="hero-content">
+    <div class="hero-badge">🎬 Marketing Digital Colaborativo</div>
+    <h1 class="hero-title">
+      <span class="word">Transformamos</span>
+      <span class="word">tu</span>
+      <span class="word">negocio</span><br>
+      <span class="word">con</span>
+      <span class="word accent">marketing</span>
+      <span class="word accent">digital</span>
+    </h1>
+    <p class="hero-sub">
+      No solo creamos contenido <strong>en conjunto</strong>, trabajamos codo a codo contigo para que tu marca crezca en digital. Producción audiovisual, gestión de redes y estrategia, todo en un solo equipo.
+    </p>
+    <div class="hero-actions">
+      <a href="#agendar" class="btn-primary">Agendar llamada gratis</a>
+    </div>
+  </div>
+
+  <!-- FOTO INCRUSTADA (placeholder AI-generated) -->
+  <div class="hero-photo">
+    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 520'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23D946EF;stop-opacity:0.8'/%3E%3Cstop offset='50%25' style='stop-color:%237C3AED;stop-opacity:0.9'/%3E%3Cstop offset='100%25' style='stop-color:%23F59E0B;stop-opacity:0.7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='420' height='520' fill='url(%23bg)'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial,sans-serif' font-size='24' fill='white' text-anchor='middle' dy='.3em' opacity='0.9'%3E📹 EQUIPO EN ACCIÓN%3C/text%3E%3Ctext x='50%25' y='58%25' font-family='Arial,sans-serif' font-size='12' fill='white' text-anchor='middle' opacity='0.7'%3E(Reemplazar con foto real)%3C/text%3E%3C/svg%3E" alt="Equipo Nexum grabando">
+  </div>
+</section>
+
+<!-- TRUST BAR DUAL -->
+<div class="trust-bar-dual reveal">
+  <div class="trust-section">
+    <p>Sectores con los que trabajamos</p>
+    <div class="trust-items">
+      <div class="trust-item">🦷 Salud & Clínicas</div>
+      <div class="trust-item">🍽️ Gastronomía</div>
+      <div class="trust-item">🏪 Retail</div>
+      <div class="trust-item">🏨 Turismo & Hotelería</div>
+    </div>
+  </div>
+  <div class="cities-ticker">
+    <div class="cities-track">
+      <span>Santiago</span><span>Pichilemu</span><span>San Vicente</span><span>Rengo</span><span>Rancagua</span><span>Viña del Mar</span><span>Valparaíso</span><span>Región Metropolitana</span><span>VI Región</span>
+      <span>Santiago</span><span>Pichilemu</span><span>San Vicente</span><span>Rengo</span><span>Rancagua</span><span>Viña del Mar</span><span>Valparaíso</span><span>Región Metropolitana</span><span>VI Región</span>
+    </div>
+  </div>
+</div>
+
+<!-- VALOR -->
+<div class="section-dark">
+<div class="blob blob-1" style="top:-10%;right:-5%;width:400px;height:400px"></div>
+<div class="divider"></div>
+<section id="valor" class="reveal">
+  <span class="section-label">Por qué Nexum Digital</span>
+  <h2 class="section-title">Acompañamiento<br><em>en cada paso.</em></h2>
+  <div class="props-grid" style="margin-top:40px">
+    <div class="prop">
+      <div class="prop-icon">🤝</div>
+      <h3>Trabajo colaborativo</h3>
+      <p>No delegues y olvídate. Co-creamos cada pieza contigo, alineados con tu visión y objetivos. Somos tu equipo de marketing interno sin el costo fijo.</p>
+    </div>
+    <div class="prop">
+      <div class="prop-icon">📹</div>
+      <h3>Equipo audiovisual propio</h3>
+      <p>Sin subcontratación. Nuestro equipo profesional llega a tu negocio con cámaras, iluminación y experiencia para capturar tu esencia.</p>
+    </div>
+    <div class="prop">
+      <div class="prop-icon">📊</div>
+      <h3>Resultados medibles</h3>
+      <p>Dashboard en tiempo real, reportes mensuales y métricas claras. Sabrás exactamente qué funciona y cómo mejoramos cada mes.</p>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- COMO FUNCIONA -->
+<div class="divider"></div>
+<section id="como" class="reveal">
+  <span class="section-label">El proceso</span>
+  <h2 class="section-title">Simple.<br><em>En 3 pasos.</em></h2>
+  <div class="steps" style="margin-top:48px">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-icon">📅</div>
+      <h3>Agenda una llamada</h3>
+      <p>30 minutos sin compromiso. Te mostramos casos reales y diseñamos juntos la estrategia que tu negocio necesita.</p>
+    </div>
+    <div class="step">
+      <div class="step-icon">🎬</div>
+      <div class="step-num">02</div>
+      <h3>Producimos juntos</h3>
+      <p>Vamos a tu negocio con equipo profesional. En una sesión mensual capturamos todo el contenido: reels, fotos y material para RRSS.</p>
+    </div>
+    <div class="step">
+      <div class="step-icon">🚀</div>
+      <div class="step-num">03</div>
+      <h3>Gestionamos y medimos</h3>
+      <p>Editamos, planificamos, publicamos y monitoreamos. Tú ves los resultados en tiempo real y ajustamos la estrategia cada mes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PACKS ESTRELLA -->
+<div class="section-gradient">
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="divider"></div>
+<section id="packs-estrella" class="reveal">
+  <span class="section-label">Servicios recurrentes</span>
+  <h2 class="section-title">Packs de<br><em>Marketing Digital.</em></h2>
+  <div class="packs-grid">
+    <!-- PACK PRESENCIA -->
+    <div class="pack-card">
+      <div class="pack-tag popular">✨ Ideal para Empezar</div>
+      <div class="pack-name">Pack Presencia</div>
+      <div class="pack-sub">Para negocios que necesitan presencia profesional en redes sociales</div>
+      <div class="pack-guarantee">Sin permanencia - Cancela cuando quieras</div>
+      <div class="pack-price">$390k</div>
+      <div class="pack-price-sub">CLP / mes + IVA</div>
+      <ul class="pack-features">
+        <li>3 Reels profesionales (9:16, optimizados para algoritmo)</li>
+        <li>6 posts estáticos con fotografía y diseño</li>
+        <li>1 sesión mensual de producción (foto + video en tu negocio)</li>
+        <li>Gestión completa de redes sociales</li>
+        <li>Publicación en horarios óptimos</li>
+        <li>Planificación editorial mensual</li>
+        <li>Reporte básico de resultados</li>
+      </ul>
+      <a href="#agendar" class="pack-btn ghost">Comenzar con Presencia →</a>
+    </div>
+
+    <!-- PACK MARKETING -->
+    <div class="pack-card featured">
+      <div class="pack-tag">⭐ Recomendado</div>
+      <div class="pack-name">Pack Marketing Digital</div>
+      <div class="pack-sub">Evoluciona desde Presencia: captación activa de clientes + métricas avanzadas</div>
+      <div class="pack-guarantee">Sin permanencia - Cancela cuando quieras</div>
+      <div class="pack-price">$490k</div>
+      <div class="pack-price-sub">CLP / mes + IVA</div>
+      <ul class="pack-features">
+        <li>Todo lo del Pack Presencia</li>
+        <li>Google Ads completo (Search + Display + Maps)</li>
+        <li>Campaña de leads con landing page personalizada</li>
+        <li>Gestión de comunidad (DMs y comentarios)</li>
+        <li>Dashboard de métricas en tiempo real</li>
+        <li>Reporte ampliado con recomendaciones mensuales</li>
+        <li>Optimización continua de campañas</li>
+      </ul>
+      <a href="#agendar" class="pack-btn">Quiero este pack →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ROI CALCULATOR -->
+<section id="roi" class="reveal" style="position:relative;z-index:1">
+  <span class="section-label">Calculadora ROI</span>
+  <h2 class="section-title">¿Cuánto vale<br><em>un cliente nuevo?</em></h2>
+  <p class="section-body" style="margin:16px 0 40px">Mueve los sliders y descubre si el pack se paga solo. O usa un preset de tu industria.</p>
+  <div class="roi-card">
+    <div class="roi-grid">
+      <div class="roi-inputs">
+        <div class="roi-field">
+          <label>Presets por industria</label>
+          <div class="roi-presets">
+            <button class="roi-preset-btn" onclick="applyPreset(120, 4, 390)">🦷 Clínica Dental</button>
+            <button class="roi-preset-btn" onclick="applyPreset(40, 8, 390)">🍽️ Restaurant</button>
+            <button class="roi-preset-btn" onclick="applyPreset(80, 5, 390)">✨ Spa/Estética</button>
+          </div>
+        </div>
+        <div class="roi-field">
+          <label>Precio promedio por servicio/venta</label>
+          <span class="roi-val" id="rv-ticket">$180k</span>
+          <input type="range" id="r-ticket" min="30" max="500" value="180" step="10">
+        </div>
+        <div class="roi-field">
+          <label>Clientes nuevos que esperas / mes</label>
+          <span class="roi-val" id="rv-pacs">5</span>
+          <input type="range" id="r-pacs" min="1" max="30" value="5" step="1">
+        </div>
+        <div class="roi-field">
+          <label>Pack seleccionado</label>
+          <div style="display:flex;gap:12px;margin-top:8px">
+            <button class="roi-preset-btn" id="pack-presencia-btn" onclick="selectPackROI(390, this)" style="flex:1;border-color:var(--gold);color:var(--gold);background:var(--gold-dim)">Presencia $390k</button>
+            <button class="roi-preset-btn" id="pack-marketing-btn" onclick="selectPackROI(490, this)" style="flex:1">Marketing $490k</button>
+          </div>
+        </div>
+      </div>
+      <div class="roi-result">
+        <div style="font-size:12px;color:var(--white3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">Retorno estimado</div>
+        <div class="roi-result-n" id="roi-x">2.3x</div>
+        <div class="roi-result-x">la inversión</div>
+        <div class="roi-breakdown" style="margin-top:28px">
+          <div class="roi-line"><span>Ingreso estimado por clientes / mes</span><span id="roi-income">$900k</span></div>
+          <div class="roi-line"><span>Inversión en el pack</span><span id="roi-inv">−$390k</span></div>
+          <div class="roi-line"><span>🟢 Ganancia neta estimada</span><span id="roi-net">$510k</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /section-gradient -->
+
+<!-- SERVICIOS COMPLEMENTARIOS -->
+<div class="section-dark">
+<div class="blob blob-2" style="top:-10%;left:-8%;width:500px;height:500px"></div>
+<div class="divider"></div>
+<section id="servicios-complementarios" class="reveal">
+  <span class="section-label">Servicios puntuales</span>
+  <h2 class="section-title">Eventos &<br><em>Proyectos especiales.</em></h2>
+  <p class="section-body" style="margin-top:16px">Servicios one-time para empresas y eventos. Facturación por hora de trabajo en terreno.</p>
+  <div class="servicios-grid">
+    <!-- REGISTRO AUDIOVISUAL -->
+    <div class="servicio-card">
+      <div class="servicio-icon">🎥</div>
+      <div class="servicio-name">Registro Audiovisual Eventos</div>
+      <div class="servicio-desc">Cobertura profesional en 4K para eventos corporativos, seminarios, congresos o celebraciones.</div>
+      <div class="servicio-price">$75k</div>
+      <div class="servicio-price-sub">por hora · 3 horas mínimo</div>
+      <a href="#agendar" class="servicio-btn">Consultar →</a>
+    </div>
+
+    <!-- REGISTRO FOTOGRÁFICO -->
+    <div class="servicio-card">
+      <div class="servicio-icon">📸</div>
+      <div class="servicio-name">Registro Fotográfico Eventos</div>
+      <div class="servicio-desc">Fotografía profesional de eventos empresariales, inauguraciones, premiaciones y más.</div>
+      <div class="servicio-price">$60k</div>
+      <div class="servicio-price-sub">por hora · 3 horas mínimo</div>
+      <a href="#agendar" class="servicio-btn">Consultar →</a>
+    </div>
+
+    <!-- VIDEO CORPORATIVO -->
+    <div class="servicio-card">
+      <div class="servicio-icon">🎬</div>
+      <div class="servicio-name">Video Corporativo</div>
+      <div class="servicio-desc">Video institucional de 5-15 min con guion, grabación profesional y edición cinematográfica.</div>
+      <div class="servicio-price">A conversar</div>
+      <div class="servicio-price-sub">Según duración y complejidad</div>
+      <a href="#agendar" class="servicio-btn">Consultar →</a>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio" class="reveal">
+  <span class="section-label">Nuestro trabajo</span>
+  <h2 class="section-title">Portafolio</h2>
+  <div class="portfolio-filter">
+    <button class="filter-btn active" data-filter="all">Todos</button>
+    <button class="filter-btn" data-filter="presencia">Pack Presencia</button>
+    <button class="filter-btn" data-filter="marketing">Pack Marketing</button>
+    <button class="filter-btn" data-filter="eventos">Eventos</button>
+    <button class="filter-btn" data-filter="corporativo">Video Corporativo</button>
+  </div>
+  <div class="portfolio-grid">
+    <!-- Placeholders -->
+    <div class="portfolio-item" data-category="presencia,salud">
+      <div class="portfolio-thumb">🦷</div>
+      <div class="portfolio-overlay">
+        <div class="portfolio-play">▶</div>
+        <span>Clínica Dental Centro</span>
+        <small>Reel · Pack Presencia · Salud</small>
+      </div>
+    </div>
+    <div class="portfolio-item" data-category="marketing,gastronomia" style="aspect-ratio:4/5">
+      <div class="portfolio-thumb">🍽️</div>
+      <div class="portfolio-overlay">
+        <div class="portfolio-play">▶</div>
+        <span>Restaurant Litoral</span>
+        <small>Campaña Google Ads · Pack Marketing</small>
+      </div>
+    </div>
+    <div class="portfolio-item" data-category="corporativo,turismo">
+      <div class="portfolio-thumb">🏨</div>
+      <div class="portfolio-overlay">
+        <div class="portfolio-play">▶</div>
+        <span>Hotel Pichilemu</span>
+        <small>Video Corporativo 10min · Turismo</small>
+      </div>
+    </div>
+    <div class="portfolio-item" data-category="eventos,retail" style="aspect-ratio:4/5">
+      <div class="portfolio-thumb">📸</div>
+      <div class="portfolio-overlay">
+        <div class="portfolio-play">🖼</div>
+        <span>Inauguración Tienda</span>
+        <small>Registro Fotográfico · Retail</small>
+      </div>
+    </div>
+    <div class="portfolio-item" data-category="presencia,salud">
+      <div class="portfolio-thumb">✨</div>
+      <div class="portfolio-overlay">
+        <div class="portfolio-play">▶</div>
+        <span>Spa Viña del Mar</span>
+        <small>Reels mensuales · Pack Presencia</small>
+      </div>
+    </div>
+    <div class="portfolio-item" data-category="eventos,gastronomia" style="aspect-ratio:4/5">
+      <div class="portfolio-thumb">🎥</div>
+      <div class="portfolio-overlay">
+        <div class="portfolio-play">▶</div>
+        <span>Aniversario Restaurant</span>
+        <small>Registro Audiovisual · Evento</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /section-dark -->
+
+<!-- FAQ -->
+<div class="divider"></div>
+<section id="faq" class="reveal">
+  <span class="section-label">Preguntas frecuentes</span>
+  <h2 class="section-title">Todo lo que<br><em>necesitas saber.</em></h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>¿Qué incluye la sesión mensual de producción?</span>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-a">
+        Vamos a tu negocio con equipo profesional (cámaras, iluminación, micrófonos) y grabamos todo el material necesario para el mes: reels, videos, fotos de producto, testimoniales, behind-the-scenes. Dura entre 2-4 horas según el pack.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>¿Qué pasa si mi negocio no está en Santiago?</span>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-a">
+        Operamos en toda la Región Metropolitana y VI Región (Pichilemu, San Vicente, Rengo, Rancagua, Viña, Valparaíso). Para otras regiones, agendamos producción remota o coordinamos viajes según disponibilidad.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>¿Cuál es la duración mínima del contrato?</span>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-a">
+        No hay permanencia mínima. Puedes cancelar cuando quieras sin multa ni penalización. Te recomendamos al menos 3 meses para ver resultados consistentes, pero la decisión es tuya.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>¿Ustedes manejan mis redes sociales o solo crean contenido?</span>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-a">
+        Gestión completa. Creamos el contenido, diseñamos la estrategia editorial, programamos publicaciones, respondemos comentarios/DMs (Pack Marketing), monitoreamos métricas y optimizamos según resultados. Tú solo apruebas y ves crecer tu marca.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>¿Cómo funciona el proceso de aprobación del contenido?</span>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-a">
+        Cada semana te enviamos el calendario editorial con previews del contenido. Tienes 48 horas para aprobar o solicitar ajustes. Una vez aprobado, publicamos según el horario óptimo. Todo por WhatsApp o el canal que prefieras.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>¿Qué sucede si no puedo asistir a la sesión de producción?</span>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-a">
+        No hay problema. Podemos trabajar con tu equipo, grabar instalaciones/producto, o reagendar la sesión. La flexibilidad es parte del servicio — nos adaptamos a tu disponibilidad.
+      </div>
+    </div>
+  </div>
+
+  <!-- GARANTÍA SEPARADA -->
+  <div class="garantia-section">
+    <div class="garantia-icon">✓</div>
+    <h3>Sin permanencia obligatoria</h3>
+    <p>Cancela cuando quieras, sin multa ni penalización. Creemos en resultados, no en contratos amarrados.</p>
+  </div>
+</section>
+
+<!-- AGENDAR -->
+<div class="section-purple">
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<section id="agendar">
+  <div class="agendar-wrap reveal">
+    <div class="agendar-badge">⚡ Solo trabajamos con 8 clientes simultáneos</div>
+    <h2>Agenda tu<br>llamada gratis</h2>
+    <p>30 minutos para conocer tu negocio, mostrarte casos reales y diseñar juntos la estrategia que necesitas.</p>
+    <div class="agendar-urgency">Solo trabajamos con 8 clientes a la vez</div>
+    <a href="#" class="btn-primary" style="display:inline-block;text-decoration:none">Agendar ahora (Calendly próximamente) →</a>
+    <p style="margin-top:24px;font-size:13px;opacity:0.7">O escríbenos por WhatsApp</p>
+  </div>
+</section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">Nexum Digital<span>.</span></a>
+  <div class="footer-links">
+    <a href="#packs-estrella">Servicios</a>
+    <a href="#portfolio">Portafolio</a>
+    <a href="#faq">FAQ</a>
+    <a href="#agendar">Contacto</a>
+  </div>
+  <div>© 2026 Nexum Digital · Santiago, Chile</div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/56XXXXXXXXX" class="whatsapp-float" target="_blank" rel="noopener">
+  📱
+</a>
+
+<script>
+// ── NAV SCROLL ──
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ── SCROLL REVEAL ──
+const reveals = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => revealObserver.observe(el));
+
+// ── FAQ TOGGLE ──
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+// ── ROI CALCULATOR ──
+let currentPack = 390;
+const ticketInput = document.getElementById('r-ticket');
+const pacsInput = document.getElementById('r-pacs');
+const ticketVal = document.getElementById('rv-ticket');
+const pacsVal = document.getElementById('rv-pacs');
+
+function updateROI() {
+  const ticket = parseInt(ticketInput.value);
+  const pacs = parseInt(pacsInput.value);
+  
+  // Update displayed values
+  ticketVal.textContent = `$${ticket}k`;
+  pacsVal.textContent = pacs;
+  
+  // Update slider fill
+  const ticketPct = ((ticket - 30) / (500 - 30)) * 100;
+  const pacsPct = ((pacs - 1) / (30 - 1)) * 100;
+  ticketInput.style.setProperty('--pct', ticketPct + '%');
+  pacsInput.style.setProperty('--pct', pacsPct + '%');
+  
+  // Calculate ROI
+  const income = ticket * pacs;
+  const net = income - currentPack;
+  const roi = income / currentPack;
+  
+  document.getElementById('roi-income').textContent = `$${income}k`;
+  document.getElementById('roi-inv').textContent = `−$${currentPack}k`;
+  document.getElementById('roi-net').textContent = `$${net}k`;
+  document.getElementById('roi-x').textContent = roi.toFixed(1) + 'x';
+}
+
+ticketInput.addEventListener('input', updateROI);
+pacsInput.addEventListener('input', updateROI);
+
+function selectPackROI(pack, btn) {
+  currentPack = pack;
+  document.querySelectorAll('[id^="pack-"][id$="-btn"]').forEach(b => {
+    b.style.borderColor = 'var(--border2)';
+    b.style.color = 'var(--white2)';
+    b.style.background = 'transparent';
+  });
+  btn.style.borderColor = 'var(--gold)';
+  btn.style.color = 'var(--gold)';
+  btn.style.background = 'var(--gold-dim)';
+  updateROI();
+}
+
+function applyPreset(ticket, pacs, pack) {
+  ticketInput.value = ticket;
+  pacsInput.value = pacs;
+  currentPack = pack;
+  
+  // Select correct pack button
+  const packBtn = pack === 390 ? document.getElementById('pack-presencia-btn') : document.getElementById('pack-marketing-btn');
+  selectPackROI(pack, packBtn);
+}
+
+// Initial calculation
+updateROI();
+
+// ── PORTFOLIO FILTER ──
+const filterBtns = document.querySelectorAll('.filter-btn');
+const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    // Update active button
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    
+    const filter = btn.getAttribute('data-filter');
+    
+    // Filter items
+    portfolioItems.forEach(item => {
+      const categories = item.getAttribute('data-category');
+      if (filter === 'all' || categories.includes(filter)) {
+        item.style.display = 'block';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  });
+});
+</script>
+
+</body>
+</html>
