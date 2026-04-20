@@ -653,10 +653,10 @@ section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
 
 /* ── SERVICIOS COMPLEMENTARIOS ── */
 .servicios-grid {
-  display: grid; grid-template-columns: repeat(2,1fr);
-  gap: 20px;
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 20px; margin-top: 40px;
 }
-@media(max-width:768px) { .servicios-grid { grid-template-columns: 1fr; } }
+@media(max-width:900px) { .servicios-grid { grid-template-columns: 1fr; } }
 .servicio-card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -753,6 +753,44 @@ section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
   color: var(--cyan);
   background: var(--cyan-dim);
 }
+
+/* ── SERVICIO TIERS (PRECIOS ESCALONADOS) ── */
+.servicio-tiers {
+  display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;
+}
+.servicio-tier {
+  flex: 1; min-width: 100px;
+  padding: 12px 14px;
+  border-radius: var(--rsm);
+  border: 1px solid var(--border2);
+  background: var(--card);
+  text-align: center;
+  transition: all .3s;
+}
+.servicio-tier:hover {
+  border-color: var(--cyan);
+  background: var(--cyan-dim);
+}
+.servicio-tier.featured-tier {
+  border-color: var(--cyan);
+  background: linear-gradient(135deg, rgba(6,182,212,0.06), rgba(245,158,11,0.06));
+  box-shadow: 0 2px 12px rgba(6,182,212,0.1);
+}
+.tier-label {
+  display: block;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: .06em; text-transform: uppercase;
+  color: var(--white3); margin-bottom: 6px;
+}
+.tier-price {
+  display: block;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px; line-height: 1;
+  background: linear-gradient(135deg, var(--cyan), var(--amber));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.featured-tier .tier-price { font-size: 32px; }
 
 /* ROI CALC */
 #roi { padding-top: 60px; }
@@ -1306,36 +1344,63 @@ footer {
 <section id="servicios-complementarios" class="reveal">
   <span class="section-label">Servicios puntuales</span>
   <h2 class="section-title">Eventos &<br><em>Proyectos especiales.</em></h2>
-  <p class="section-body" style="margin-top:16px">Servicios one-time para empresas y eventos. Facturación por hora de trabajo en terreno.</p>
+  <p class="section-body" style="margin-top:16px">Servicios puntuales para empresas y eventos. Todos los precios incluyen IVA.</p>
   <div class="servicios-grid">
+    <!-- VIDEO CORPORATIVO -->
+    <div class="servicio-card">
+      <div class="servicio-icon">🎬</div>
+      <div class="servicio-name">Video Corporativo</div>
+      <div class="servicio-desc">Presentá tu empresa con un video profesional de alto impacto. Guion, dirección creativa, grabación en terreno y edición cinematográfica incluidos. Entrega en formatos para web y RRSS.</div>
+      <div class="servicio-tiers">
+        <div class="servicio-tier">
+          <span class="tier-label">1 minuto</span>
+          <span class="tier-price">$450.000</span>
+        </div>
+        <div class="servicio-tier featured-tier">
+          <span class="tier-label">2-3 minutos</span>
+          <span class="tier-price">$950.000</span>
+        </div>
+      </div>
+      <div class="servicio-price-sub">IVA incluido</div>
+      <a href="#agendar" class="servicio-btn">Cotizar video →</a>
+    </div>
+
     <!-- REGISTRO AUDIOVISUAL -->
     <div class="servicio-card">
       <div class="servicio-icon">🎥</div>
       <div class="servicio-name">Registro Audiovisual Eventos</div>
-      <div class="servicio-desc">Cobertura profesional en 4K para eventos corporativos, seminarios, congresos o celebraciones.</div>
-      <div class="servicio-price">$75k</div>
-      <div class="servicio-price-sub">por hora · 3 horas mínimo</div>
-      <a href="#agendar" class="servicio-btn">Consultar →</a>
+      <div class="servicio-desc">1 videógrafo profesional en tu evento + edición de 1 cápsula resumen de 60 segundos en formato vertical u horizontal. Material editado en 5–7 días hábiles.</div>
+      <div class="servicio-tiers">
+        <div class="servicio-tier featured-tier">
+          <span class="tier-label">Evento completo</span>
+          <span class="tier-price">$350.000</span>
+        </div>
+      </div>
+      <div class="servicio-price-sub">IVA incluido · Seminarios, congresos, lanzamientos y más</div>
+      <a href="#agendar" class="servicio-btn">Cotizar cobertura →</a>
     </div>
 
     <!-- REGISTRO FOTOGRÁFICO -->
     <div class="servicio-card">
       <div class="servicio-icon">📸</div>
       <div class="servicio-name">Registro Fotográfico Eventos</div>
-      <div class="servicio-desc">Fotografía profesional de eventos empresariales, inauguraciones, premiaciones y más.</div>
-      <div class="servicio-price">$60k</div>
-      <div class="servicio-price-sub">por hora · 3 horas mínimo</div>
-      <a href="#agendar" class="servicio-btn">Consultar →</a>
-    </div>
-
-    <!-- VIDEO CORPORATIVO -->
-    <div class="servicio-card">
-      <div class="servicio-icon">🎬</div>
-      <div class="servicio-name">Video Corporativo</div>
-      <div class="servicio-desc">Video institucional de 5-15 min con guion, grabación profesional y edición cinematográfica.</div>
-      <div class="servicio-price">A conversar</div>
-      <div class="servicio-price-sub">Según duración y complejidad</div>
-      <a href="#agendar" class="servicio-btn">Consultar →</a>
+      <div class="servicio-desc">Cobertura fotográfica profesional para seminarios, eventos corporativos, charlas, lanzamientos, ferias y congresos. Fotos de alta calidad para web, RRSS y medios impresos. Nos adaptamos al cronograma de tu evento.</div>
+      <div class="servicio-tiers">
+        <div class="servicio-tier">
+          <span class="tier-label">2 horas</span>
+          <span class="tier-price">$250.000</span>
+        </div>
+        <div class="servicio-tier featured-tier">
+          <span class="tier-label">4 horas</span>
+          <span class="tier-price">$450.000</span>
+        </div>
+        <div class="servicio-tier">
+          <span class="tier-label">8 horas</span>
+          <span class="tier-price">$850.000</span>
+        </div>
+      </div>
+      <div class="servicio-price-sub">IVA incluido · Cobertura en Región Metropolitana</div>
+      <a href="#agendar" class="servicio-btn">Cotizar fotos →</a>
     </div>
   </div>
 </section>
