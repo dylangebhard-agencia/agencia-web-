@@ -16,6 +16,81 @@
       "sourceType": "github",
       "computedHash": "0bda4a0839dbb8ecb19b40707299c2558ddc7b63164d1d8008209ce6d03772b7"
     },
+    "alive:build-extensions": {
+      "source": "alivecontext/alive",
+      "sourceType": "github",
+      "computedHash": "e99af75d771ea7dee71cf2ad8693c8675c02f33185e1ecff859d8bba393c7e1e"
+    },
+    "alive:bundle": {
+      "source": "alivecontext/alive",
+      "sourceType": "github",
+      "computedHash": "990564d3a85fcaac058bc5205b19f3c710adc718b7dc592d454684e945ef0964"
+    },
+    "alive:capture-context": {
+      "source": "alivecontext/alive",
+      "sourceType": "github",
+      "computedHash": "926a6023ea25701d71b1f529c49837fab441f7ea9047876b698369b311ae4565"
+    },
+    "alive:create-walnut": {
+      "source": "alivecontext/alive",
+      "sourceType": "github",
+      "computedHash": "5dc8c2de603003ae07e46af28904ee941b95fb2b3f2da98ae2fd64648d1b11ff"
+    },
+    "alive:load-context": {
+      "source": "alivecontext/alive",
+      "sourceType": "github",
+      "computedHash": "20c6f429c213b70306311991d857950a6ead67863828a1fcf449bdc7fba189bf"
+    },
+    "alive:mine-for-context": {
+      "source": "alivecontext/alive",
+      "sourceType": "github",
+      "computedHash": "9828d77bd7be5b0b571311d2b705036e14f073dd9310c7ae8a7f5e586cf4f5f6"
+    },
+    "alive:my-context-graph": {
+      "source": "alivecontext/alive",
+      "sourceType": "github",
+      "computedHash": "bc7b4657b0608232f4509924133f2b023332fb11fc41b472a883a391937eaa5d"
+    },
+    "alive:save": {
+      "source": "alivecontext/alive",
+      "sourceType": "github",
+      "computedHash": "edac271e9072951b3a33625841b17f32e69bd80ae38c6f24fe4040776e69191d"
+    },
+    "alive:search-world": {
+      "source": "alivecontext/alive",
+      "sourceType": "github",
+      "computedHash": "01b08a248498e906fa39703e73e316c463e782bc199842b26a1bce44bf877b18"
+    },
+    "alive:session-context-rebuild": {
+      "source": "alivecontext/alive",
+      "sourceType": "github",
+      "computedHash": "edfa578739c2264b69c5ff2193fd329ef92282f68960294e494711405706994c"
+    },
+    "alive:session-history": {
+      "source": "alivecontext/alive",
+      "sourceType": "github",
+      "computedHash": "164cd55b314093bc6ddaf754ac5efeba68c2d7660d0a798747b6515756fce2ff"
+    },
+    "alive:settings": {
+      "source": "alivecontext/alive",
+      "sourceType": "github",
+      "computedHash": "a9702d9ce9cfa7655b6b01a76c9412f73aff21f4faf43f6d029f68d6d81191ee"
+    },
+    "alive:system-cleanup": {
+      "source": "alivecontext/alive",
+      "sourceType": "github",
+      "computedHash": "d71bd48ef6ee827a3c99763aaefb903e8685a4218ca7f76d0efe7eb8db1abac6"
+    },
+    "alive:system-upgrade": {
+      "source": "alivecontext/alive",
+      "sourceType": "github",
+      "computedHash": "854694e07b1cddc8ebf54c43647708df3ad286e3abccd52d417733e28e2855d5"
+    },
+    "alive:world": {
+      "source": "alivecontext/alive",
+      "sourceType": "github",
+      "computedHash": "77b8ab5c6b111e01fd6b6b5b9efca5c5a5a9cea3ccb36205043cd953f5102cf4"
+    },
     "analytics-tracking": {
       "source": "coreyhaines31/marketingskills",
       "sourceType": "github",
