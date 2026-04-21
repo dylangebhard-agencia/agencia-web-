@@ -1497,7 +1497,7 @@ footer {
         📅 Packs Mensuales
       </button>
       <button class="service-tab" data-tab="eventos" onclick="switchTab(this)">
-        🎬 Eventos & Proyectos
+        🎬 Servicios Complementarios
       </button>
     </div>
 
@@ -1676,7 +1676,7 @@ footer {
       <button class="filter-btn" data-filter="servicio:presencia">Pack Presencia</button>
       <button class="filter-btn" data-filter="servicio:marketing">Pack Marketing</button>
       <button class="filter-btn" data-filter="servicio:corporativo">Video Corporativo</button>
-      <button class="filter-btn" data-filter="servicio:eventos">Eventos</button>
+      <button class="filter-btn" data-filter="servicio:complementarios">Serv. Complementarios</button>
     </div>
     <div class="filter-row">
       <span class="filter-row-label">Rubro</span>
@@ -1690,7 +1690,7 @@ footer {
   <div class="portfolio-grid">
 
     <!-- PROTAGONICO -->
-    <div class="portfolio-item" data-servicio="marketing" data-rubro="retail" data-ciudad="santiago">
+    <div class="portfolio-item" data-servicio="marketing,complementarios" data-rubro="retail" data-ciudad="santiago">
       <div class="portfolio-carousel" style="background:linear-gradient(135deg,#7C3AED 0%,#D946EF 100%)">
         <img src="assets/portfolio/protagonico/09092024-DSC05813.jpg" alt="Protagónico" class="carousel-slide active">
         <img src="assets/portfolio/protagonico/09092024-DSC05885.jpg" alt="Protagónico" class="carousel-slide">
@@ -1713,7 +1713,7 @@ footer {
     </div>
 
     <!-- CLINICA DENTAL -->
-    <div class="portfolio-item" data-servicio="presencia" data-rubro="salud" data-ciudad="santiago">
+    <div class="portfolio-item" data-servicio="presencia,complementarios" data-rubro="salud" data-ciudad="santiago">
       <div class="portfolio-carousel" style="background:linear-gradient(135deg,#06B6D4 0%,#7C3AED 100%)">
         <img src="assets/portfolio/clinica-dental/DSC01547.jpg" alt="Clínica Dental" class="carousel-slide active">
         <img src="assets/portfolio/clinica-dental/DSC01550.jpg" alt="Clínica Dental" class="carousel-slide">
@@ -1754,7 +1754,7 @@ footer {
     </div>
 
     <!-- CASO 4 -->
-    <div class="portfolio-item" data-servicio="eventos" data-rubro="corporativo" data-ciudad="santiago">
+    <div class="portfolio-item" data-servicio="complementarios" data-rubro="corporativo" data-ciudad="santiago">
       <div class="portfolio-carousel" style="background:linear-gradient(135deg,#D946EF 0%,#F59E0B 100%)">
         <div class="carousel-placeholder">
           <div class="portfolio-brand">CASO 4</div>
@@ -1762,7 +1762,7 @@ footer {
       </div>
       <div class="portfolio-info">
         <div class="portfolio-badges">
-          <span class="p-badge p-badge-servicio">Eventos</span>
+          <span class="p-badge p-badge-servicio">Serv. Complementarios</span>
           <span class="p-badge p-badge-rubro">Corporativo</span>
           <span class="p-badge p-badge-ciudad">Santiago</span>
         </div>
@@ -2005,8 +2005,9 @@ function applyPortfolioFilters() {
   items.forEach(item => {
     let show = true;
     for (const [dim, val] of Object.entries(activeFilters)) {
-      if (val !== 'all' && item.getAttribute('data-' + dim) !== val) {
-        show = false; break;
+      if (val !== 'all') {
+        const itemVal = item.getAttribute('data-' + dim) || '';
+        if (!itemVal.split(',').includes(val)) { show = false; break; }
       }
     }
     item.style.display = show ? '' : 'none';
