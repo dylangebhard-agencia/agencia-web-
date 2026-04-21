@@ -1030,7 +1030,14 @@ section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
 /* ── PORTFOLIO ── */
 #portfolio { padding-top: 80px; }
 .portfolio-filter {
-  display: flex; gap: 8px; flex-wrap: wrap; margin-top: 40px; margin-bottom: 32px;
+  display: flex; flex-direction: column; gap: 10px; margin-top: 40px; margin-bottom: 32px;
+}
+.filter-row {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.filter-row-label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: .12em;
+  color: var(--white3); font-weight: 700; min-width: 60px;
 }
 .filter-btn {
   padding: 7px 18px; border-radius: 99px;
@@ -1038,12 +1045,13 @@ section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
   font-size: 12px; font-weight: 500; color: var(--white2);
   cursor: pointer; transition: all .2s;
 }
+.filter-btn:hover { border-color: var(--purple); color: var(--white1); }
 .filter-btn.active {
   background: linear-gradient(135deg, var(--gold), var(--pink)); color: #fff; border-color: transparent;
 }
 .portfolio-grid {
   display: grid; grid-template-columns: repeat(3,1fr);
-  gap: 12px;
+  gap: 16px;
 }
 @media(max-width:900px) { .portfolio-grid { grid-template-columns: repeat(2,1fr); } }
 @media(max-width:500px) { .portfolio-grid { grid-template-columns: 1fr; } }
@@ -1052,75 +1060,94 @@ section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
   border: 1px solid var(--border);
   border-radius: var(--r);
   overflow: hidden;
-  position: relative;
-  aspect-ratio: 9/14;
-  transition: transform .3s;
+  transition: transform .3s, box-shadow .3s;
   cursor: pointer;
 }
-.portfolio-item:hover { transform: scale(1.02); }
-.portfolio-item:hover .portfolio-overlay { opacity: 1; }
-.portfolio-thumb {
-  width: 100%; height: 100%;
-  background: linear-gradient(135deg, #F3EDFF 0%, #FDF2F8 100%);
+.portfolio-item:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(124,58,237,0.15); }
+
+.portfolio-carousel {
+  position: relative; width: 100%; aspect-ratio: 4/5; overflow: hidden;
+}
+.carousel-slide {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; opacity: 0; transition: opacity .6s ease; z-index: 0;
+}
+.carousel-slide.active { opacity: 1; z-index: 1; }
+.carousel-dots {
+  position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 6px; z-index: 3;
+}
+.carousel-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: rgba(255,255,255,0.4); cursor: pointer;
+  transition: all .25s; border: none; padding: 0;
+}
+.carousel-dot.active { background: #fff; transform: scale(1.3); }
+.carousel-arrow {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 32px; height: 32px; border-radius: 50%;
+  border: none; background: rgba(0,0,0,0.45);
+  color: #fff; font-size: 18px; cursor: pointer;
+  opacity: 0; transition: opacity .25s;
   display: flex; align-items: center; justify-content: center;
-  font-size: 48px;
-  position: relative;
-  overflow: hidden;
+  z-index: 3; backdrop-filter: blur(4px);
 }
-.portfolio-thumb img {
-  width: 100%; height: 100%; object-fit: cover;
-  position: absolute; top: 0; left: 0;
+.portfolio-item:hover .carousel-arrow { opacity: 1; }
+.carousel-arrow:hover { background: rgba(0,0,0,0.65); }
+.carousel-prev { left: 8px; }
+.carousel-next { right: 8px; }
+
+.carousel-placeholder {
+  position: absolute; inset: 0; z-index: 1;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; padding: 24px;
 }
-.portfolio-placeholder {
-  position: absolute; inset: 0;
-  display: none; align-items: center; justify-content: center;
-  flex-direction: column;
-  background: inherit;
-  padding: 24px;
-}
-.portfolio-brand {
+.carousel-placeholder .portfolio-brand {
   font-family: 'Syne', sans-serif;
   font-size: clamp(16px, 3vw, 28px);
-  font-weight: 800;
-  letter-spacing: .08em;
-  color: rgba(255,255,255,0.95);
-  text-align: center;
-  line-height: 1.1;
-  text-shadow: 0 2px 16px rgba(0,0,0,0.15);
+  font-weight: 800; letter-spacing: .08em;
+  color: rgba(255,255,255,0.95); text-align: center;
+  line-height: 1.1; text-shadow: 0 2px 16px rgba(0,0,0,0.15);
 }
-.portfolio-placeholder::after {
-  content: '';
-  position: absolute; inset: 0;
+.carousel-placeholder::after {
+  content: ''; position: absolute; inset: 0;
   background-image:
     linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
-  background-size: 20px 20px;
-  opacity: 0.4;
-  pointer-events: none;
+  background-size: 20px 20px; opacity: 0.4; pointer-events: none;
 }
-.portfolio-overlay {
-  position: absolute; inset: 0;
-  background: rgba(26,16,51,0.7);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  opacity: 0; transition: opacity .3s;
-  backdrop-filter: blur(4px);
-  gap: 8px;
-  padding: 20px;
-  text-align: center;
+
+.portfolio-info {
+  padding: 14px 16px; border-top: 1px solid var(--border);
 }
-.portfolio-overlay span { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: #fff; }
-.portfolio-overlay small {
-  font-size: 11px; text-transform: uppercase; letter-spacing: .08em;
-  background: linear-gradient(135deg, var(--gold), var(--pink));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
+.portfolio-badges {
+  display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px;
 }
-.portfolio-play {
-  width: 52px; height: 52px; border-radius: 50%;
-  border: 2px solid var(--pink); color: #fff;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px; margin-bottom: 8px;
+.p-badge {
+  padding: 3px 9px; border-radius: 99px; font-size: 10px;
+  font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+  white-space: nowrap;
+}
+.p-badge-servicio {
+  background: linear-gradient(135deg, var(--gold), var(--pink)); color: #fff;
+}
+.p-badge-rubro {
+  border: 1px solid rgba(124,58,237,0.3); color: var(--purple);
+  background: rgba(124,58,237,0.08);
+}
+.p-badge-ciudad {
+  border: 1px solid var(--border2); color: var(--white3);
+}
+.portfolio-name {
+  font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
+  color: var(--white1); margin: 0; line-height: 1.2;
+}
+.portfolio-desc {
+  font-size: 12px; color: var(--white3); margin: 3px 0 0;
+}
+.portfolio-empty {
+  grid-column: 1 / -1; text-align: center; padding: 60px 20px;
+  color: var(--white3); font-size: 14px; font-style: italic;
 }
 
 /* ── FAQ ── */
@@ -1641,102 +1668,109 @@ footer {
 <section id="portfolio" class="reveal">
   <span class="section-label">Nuestro trabajo</span>
   <h2 class="section-title">Portafolio</h2>
-  <p class="section-body" style="margin:16px auto 32px">Clientes reales. Resultados reales. Filtra por tipo de servicio o segmento.</p>
+  <p class="section-body" style="margin:16px auto 32px">Clientes reales. Resultados reales.</p>
   <div class="portfolio-filter">
-    <button class="filter-btn active" data-filter="all">Todos</button>
-    <button class="filter-btn" data-filter="presencia">Pack Presencia</button>
-    <button class="filter-btn" data-filter="marketing">Pack Marketing</button>
-    <button class="filter-btn" data-filter="eventos">Eventos</button>
-    <button class="filter-btn" data-filter="corporativo">Video Corporativo</button>
+    <div class="filter-row">
+      <span class="filter-row-label">Servicio</span>
+      <button class="filter-btn active" data-filter="servicio:all">Todos</button>
+      <button class="filter-btn" data-filter="servicio:presencia">Pack Presencia</button>
+      <button class="filter-btn" data-filter="servicio:marketing">Pack Marketing</button>
+      <button class="filter-btn" data-filter="servicio:corporativo">Video Corporativo</button>
+      <button class="filter-btn" data-filter="servicio:eventos">Eventos</button>
+    </div>
+    <div class="filter-row">
+      <span class="filter-row-label">Rubro</span>
+      <button class="filter-btn active" data-filter="rubro:all">Todos</button>
+      <button class="filter-btn" data-filter="rubro:salud">Salud</button>
+      <button class="filter-btn" data-filter="rubro:retail">Retail</button>
+      <button class="filter-btn" data-filter="rubro:turismo">Turismo</button>
+      <button class="filter-btn" data-filter="rubro:corporativo">Corporativo</button>
+    </div>
   </div>
   <div class="portfolio-grid">
+
     <!-- PROTAGONICO -->
-    <div class="portfolio-item" data-category="marketing,retail">
-      <div class="portfolio-thumb" style="background:linear-gradient(135deg,#7C3AED 0%,#D946EF 100%)">
-        <img src="assets/portfolio/protagonico/09092024-DSC05813.jpg" alt="Protagónico" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="portfolio-placeholder" style="display:flex">
-          <div class="portfolio-brand">PROTAGÓNICO</div>
+    <div class="portfolio-item" data-servicio="marketing" data-rubro="retail" data-ciudad="santiago">
+      <div class="portfolio-carousel" style="background:linear-gradient(135deg,#7C3AED 0%,#D946EF 100%)">
+        <img src="assets/portfolio/protagonico/09092024-DSC05813.jpg" alt="Protagónico" class="carousel-slide active">
+        <img src="assets/portfolio/protagonico/09092024-DSC05885.jpg" alt="Protagónico" class="carousel-slide">
+        <div class="carousel-dots">
+          <button class="carousel-dot active"></button>
+          <button class="carousel-dot"></button>
         </div>
+        <button class="carousel-arrow carousel-prev">&lsaquo;</button>
+        <button class="carousel-arrow carousel-next">&rsaquo;</button>
       </div>
-      <div class="portfolio-overlay">
-        <div class="portfolio-play">▶</div>
-        <span>Protagónico</span>
-        <small>Pack Marketing · Retail</small>
+      <div class="portfolio-info">
+        <div class="portfolio-badges">
+          <span class="p-badge p-badge-servicio">Pack Marketing</span>
+          <span class="p-badge p-badge-rubro">Retail</span>
+          <span class="p-badge p-badge-ciudad">Santiago</span>
+        </div>
+        <h3 class="portfolio-name">Protagónico</h3>
+        <p class="portfolio-desc">Contenido audiovisual mensual para redes sociales</p>
       </div>
     </div>
 
-    <!-- CLÍNICA DENTAL -->
-    <div class="portfolio-item" data-category="presencia,salud" style="aspect-ratio:4/5">
-      <div class="portfolio-thumb" style="background:linear-gradient(135deg,#06B6D4 0%,#7C3AED 100%)">
-        <img src="assets/portfolio/clinica-dental/DSC01547.jpg" alt="Clínica Dental" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="portfolio-placeholder" style="display:flex">
-          <div class="portfolio-brand">CLÍNICA DENTAL</div>
+    <!-- CLINICA DENTAL -->
+    <div class="portfolio-item" data-servicio="presencia" data-rubro="salud" data-ciudad="santiago">
+      <div class="portfolio-carousel" style="background:linear-gradient(135deg,#06B6D4 0%,#7C3AED 100%)">
+        <img src="assets/portfolio/clinica-dental/DSC01547.jpg" alt="Clínica Dental" class="carousel-slide active">
+        <img src="assets/portfolio/clinica-dental/DSC01550.jpg" alt="Clínica Dental" class="carousel-slide">
+        <div class="carousel-dots">
+          <button class="carousel-dot active"></button>
+          <button class="carousel-dot"></button>
         </div>
+        <button class="carousel-arrow carousel-prev">&lsaquo;</button>
+        <button class="carousel-arrow carousel-next">&rsaquo;</button>
       </div>
-      <div class="portfolio-overlay">
-        <div class="portfolio-play">▶</div>
-        <span>Clínica Dental</span>
-        <small>Pack Presencia · Salud</small>
+      <div class="portfolio-info">
+        <div class="portfolio-badges">
+          <span class="p-badge p-badge-servicio">Pack Presencia</span>
+          <span class="p-badge p-badge-rubro">Salud</span>
+          <span class="p-badge p-badge-ciudad">Santiago</span>
+        </div>
+        <h3 class="portfolio-name">Clínica Dental Anónima</h3>
+        <p class="portfolio-desc">Presencia digital y contenido profesional para clínica</p>
       </div>
     </div>
 
-    <!-- CLIENTE 3 -->
-    <div class="portfolio-item" data-category="corporativo,turismo">
-      <div class="portfolio-thumb" style="background:linear-gradient(135deg,#F59E0B 0%,#D946EF 100%)">
-        <img src="assets/portfolio/cliente-3/cover.jpg" alt="Video corporativo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="portfolio-placeholder" style="display:flex">
+    <!-- CASO 3 -->
+    <div class="portfolio-item" data-servicio="corporativo" data-rubro="turismo" data-ciudad="vregion">
+      <div class="portfolio-carousel" style="background:linear-gradient(135deg,#F59E0B 0%,#D946EF 100%)">
+        <div class="carousel-placeholder">
           <div class="portfolio-brand">CASO 3</div>
         </div>
       </div>
-      <div class="portfolio-overlay">
-        <div class="portfolio-play">▶</div>
-        <span>Video Corporativo</span>
-        <small>Caso 3 · Turismo</small>
+      <div class="portfolio-info">
+        <div class="portfolio-badges">
+          <span class="p-badge p-badge-servicio">Video Corporativo</span>
+          <span class="p-badge p-badge-rubro">Turismo</span>
+          <span class="p-badge p-badge-ciudad">VI Región</span>
+        </div>
+        <h3 class="portfolio-name">Video Corporativo</h3>
+        <p class="portfolio-desc">Producción audiovisual para empresa turística</p>
       </div>
     </div>
 
-    <!-- CLIENTE 4 -->
-    <div class="portfolio-item" data-category="eventos,corporativo" style="aspect-ratio:4/5">
-      <div class="portfolio-thumb" style="background:linear-gradient(135deg,#D946EF 0%,#F59E0B 100%)">
-        <img src="assets/portfolio/cliente-4/cover.jpg" alt="Evento" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="portfolio-placeholder" style="display:flex">
-          <div class="portfolio-brand">EVENTO</div>
+    <!-- CASO 4 -->
+    <div class="portfolio-item" data-servicio="eventos" data-rubro="corporativo" data-ciudad="santiago">
+      <div class="portfolio-carousel" style="background:linear-gradient(135deg,#D946EF 0%,#F59E0B 100%)">
+        <div class="carousel-placeholder">
+          <div class="portfolio-brand">CASO 4</div>
         </div>
       </div>
-      <div class="portfolio-overlay">
-        <div class="portfolio-play">🖼</div>
-        <span>Registro Fotográfico</span>
-        <small>Caso 4 · Evento Corporativo</small>
+      <div class="portfolio-info">
+        <div class="portfolio-badges">
+          <span class="p-badge p-badge-servicio">Eventos</span>
+          <span class="p-badge p-badge-rubro">Corporativo</span>
+          <span class="p-badge p-badge-ciudad">Santiago</span>
+        </div>
+        <h3 class="portfolio-name">Registro Fotográfico</h3>
+        <p class="portfolio-desc">Cobertura audiovisual de evento corporativo</p>
       </div>
     </div>
 
-    <!-- EXTRA 5 -->
-    <div class="portfolio-item" data-category="presencia,gastronomia">
-      <div class="portfolio-thumb" style="background:linear-gradient(135deg,#7C3AED 0%,#06B6D4 100%)">
-        <div class="portfolio-placeholder" style="display:flex">
-          <div class="portfolio-brand">+PRÓXIMO</div>
-        </div>
-      </div>
-      <div class="portfolio-overlay">
-        <div class="portfolio-play">▶</div>
-        <span>Próximamente</span>
-        <small>Nuevo cliente</small>
-      </div>
-    </div>
-
-    <!-- EXTRA 6 -->
-    <div class="portfolio-item" data-category="eventos,retail" style="aspect-ratio:4/5">
-      <div class="portfolio-thumb" style="background:linear-gradient(135deg,#F59E0B 0%,#7C3AED 100%)">
-        <div class="portfolio-placeholder" style="display:flex">
-          <div class="portfolio-brand">+PRÓXIMO</div>
-        </div>
-      </div>
-      <div class="portfolio-overlay">
-        <div class="portfolio-play">🖼</div>
-        <span>Próximamente</span>
-        <small>Nuevo caso</small>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -1946,28 +1980,86 @@ function switchTab(btn) {
   });
 }
 
-// ── PORTFOLIO FILTER ──
-const filterBtns = document.querySelectorAll('.filter-btn');
-const portfolioItems = document.querySelectorAll('.portfolio-item');
-
-filterBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    // Update active button
-    filterBtns.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    
-    const filter = btn.getAttribute('data-filter');
-    
-    // Filter items
-    portfolioItems.forEach(item => {
-      const categories = item.getAttribute('data-category');
-      if (filter === 'all' || categories.includes(filter)) {
-        item.style.display = 'block';
-      } else {
-        item.style.display = 'none';
-      }
+// ── PORTFOLIO FILTER (multi-dimension) ──
+document.querySelectorAll('.filter-row').forEach(row => {
+  row.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      row.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyPortfolioFilters();
     });
   });
+});
+
+function applyPortfolioFilters() {
+  const activeFilters = {};
+  document.querySelectorAll('.filter-row').forEach(row => {
+    const activeBtn = row.querySelector('.filter-btn.active');
+    if (activeBtn) {
+      const [dim, val] = activeBtn.getAttribute('data-filter').split(':');
+      activeFilters[dim] = val;
+    }
+  });
+  const items = document.querySelectorAll('.portfolio-item');
+  let visible = 0;
+  items.forEach(item => {
+    let show = true;
+    for (const [dim, val] of Object.entries(activeFilters)) {
+      if (val !== 'all' && item.getAttribute('data-' + dim) !== val) {
+        show = false; break;
+      }
+    }
+    item.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  let emptyEl = document.querySelector('.portfolio-empty');
+  if (visible === 0) {
+    if (!emptyEl) {
+      emptyEl = document.createElement('div');
+      emptyEl.className = 'portfolio-empty';
+      emptyEl.textContent = 'Pronto agregaremos más casos en esta categoría.';
+      document.querySelector('.portfolio-grid').appendChild(emptyEl);
+    }
+    emptyEl.style.display = '';
+  } else if (emptyEl) {
+    emptyEl.style.display = 'none';
+  }
+}
+
+// ── PORTFOLIO CAROUSEL ──
+document.querySelectorAll('.portfolio-carousel').forEach(carousel => {
+  const slides = carousel.querySelectorAll('.carousel-slide');
+  const dots = carousel.querySelectorAll('.carousel-dot');
+  if (slides.length <= 1) {
+    carousel.querySelectorAll('.carousel-arrow, .carousel-dots').forEach(el => el.style.display = 'none');
+    return;
+  }
+  let current = 0;
+  let interval;
+  function goTo(idx) {
+    slides[current].classList.remove('active');
+    if (dots[current]) dots[current].classList.remove('active');
+    current = (idx + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    if (dots[current]) dots[current].classList.add('active');
+  }
+  function startAuto() { interval = setInterval(() => goTo(current + 1), 3500); }
+  function stopAuto() { clearInterval(interval); }
+  const prev = carousel.querySelector('.carousel-prev');
+  const next = carousel.querySelector('.carousel-next');
+  if (prev) prev.addEventListener('click', e => { e.stopPropagation(); stopAuto(); goTo(current - 1); startAuto(); });
+  if (next) next.addEventListener('click', e => { e.stopPropagation(); stopAuto(); goTo(current + 1); startAuto(); });
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', e => { e.stopPropagation(); stopAuto(); goTo(i); startAuto(); });
+  });
+  let touchX = 0;
+  carousel.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; stopAuto(); }, {passive:true});
+  carousel.addEventListener('touchend', e => {
+    const diff = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? -1 : 1));
+    startAuto();
+  }, {passive:true});
+  startAuto();
 });
 </script>
 
