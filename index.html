@@ -1070,7 +1070,7 @@ section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
 }
 .carousel-slide {
   position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: cover; opacity: 0; transition: opacity .6s ease; z-index: 0;
+  object-fit: cover; object-position: center 25%; opacity: 0; transition: opacity .6s ease; z-index: 0;
 }
 .carousel-slide.active { opacity: 1; z-index: 1; }
 .carousel-dots {
@@ -1148,6 +1148,62 @@ section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
 .portfolio-empty {
   grid-column: 1 / -1; text-align: center; padding: 60px 20px;
   color: var(--white3); font-size: 14px; font-style: italic;
+}
+
+/* ── LIGHTBOX ── */
+.lightbox {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(10,5,20,0.92); backdrop-filter: blur(12px);
+  display: none; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity .3s ease;
+}
+.lightbox.open { display: flex; opacity: 1; }
+.lightbox-content {
+  position: relative; max-width: 90vw; max-height: 85vh;
+  display: flex; align-items: center; justify-content: center;
+}
+.lightbox-media {
+  max-width: 90vw; max-height: 85vh; object-fit: contain;
+  border-radius: 12px; box-shadow: 0 20px 80px rgba(0,0,0,0.5);
+}
+.lightbox video.lightbox-media {
+  background: #000; border-radius: 12px;
+}
+.lightbox-close {
+  position: absolute; top: 16px; right: 20px; z-index: 10;
+  width: 44px; height: 44px; border-radius: 50%;
+  border: none; background: rgba(255,255,255,0.1);
+  color: #fff; font-size: 24px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s;
+}
+.lightbox-close:hover { background: rgba(255,255,255,0.2); }
+.lightbox-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 48px; height: 48px; border-radius: 50%;
+  border: none; background: rgba(255,255,255,0.1);
+  color: #fff; font-size: 22px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s; backdrop-filter: blur(4px);
+}
+.lightbox-nav:hover { background: rgba(255,255,255,0.25); }
+.lightbox-prev { left: 16px; }
+.lightbox-next { right: 16px; }
+.lightbox-counter {
+  position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+  color: rgba(255,255,255,0.6); font-size: 13px; font-weight: 500;
+}
+.lightbox-caption {
+  position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+  color: #fff; font-family: 'Syne', sans-serif; font-size: 16px;
+  font-weight: 700; text-align: center; white-space: nowrap;
+}
+.portfolio-video-badge {
+  position: absolute; top: 10px; right: 10px; z-index: 2;
+  padding: 4px 10px; border-radius: 99px;
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+  color: #fff; font-size: 10px; font-weight: 700; letter-spacing: .05em;
+  text-transform: uppercase; display: flex; align-items: center; gap: 4px;
 }
 
 /* ── FAQ ── */
@@ -2082,6 +2138,105 @@ document.querySelectorAll('.portfolio-carousel').forEach(carousel => {
     startAuto();
   }, {passive:true});
   startAuto();
+});
+
+// ── LIGHTBOX ──
+const lightbox = document.createElement('div');
+lightbox.className = 'lightbox';
+lightbox.innerHTML = `
+  <button class="lightbox-close">&times;</button>
+  <button class="lightbox-nav lightbox-prev">&lsaquo;</button>
+  <div class="lightbox-content">
+    <img class="lightbox-media" src="" alt="">
+  </div>
+  <button class="lightbox-nav lightbox-next">&rsaquo;</button>
+  <div class="lightbox-caption"></div>
+  <div class="lightbox-counter"></div>
+`;
+document.body.appendChild(lightbox);
+
+let lbItems = [];
+let lbIndex = 0;
+
+function openLightbox(items, startIndex) {
+  lbItems = items;
+  lbIndex = startIndex || 0;
+  showLbItem();
+  lightbox.style.display = 'flex';
+  requestAnimationFrame(() => lightbox.classList.add('open'));
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('open');
+  setTimeout(() => { lightbox.style.display = 'none'; }, 300);
+  document.body.style.overflow = '';
+  const vid = lightbox.querySelector('video');
+  if (vid) vid.pause();
+}
+
+function showLbItem() {
+  const item = lbItems[lbIndex];
+  const content = lightbox.querySelector('.lightbox-content');
+  if (item.type === 'video') {
+    content.innerHTML = `<video class="lightbox-media" src="${item.src}" controls autoplay playsinline></video>`;
+  } else {
+    content.innerHTML = `<img class="lightbox-media" src="${item.src}" alt="${item.alt || ''}">`;
+  }
+  lightbox.querySelector('.lightbox-caption').textContent = item.caption || '';
+  lightbox.querySelector('.lightbox-counter').textContent = lbItems.length > 1 ? `${lbIndex + 1} / ${lbItems.length}` : '';
+}
+
+lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+lightbox.querySelector('.lightbox-prev').addEventListener('click', () => {
+  lbIndex = (lbIndex - 1 + lbItems.length) % lbItems.length; showLbItem();
+});
+lightbox.querySelector('.lightbox-next').addEventListener('click', () => {
+  lbIndex = (lbIndex + 1) % lbItems.length; showLbItem();
+});
+lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', e => {
+  if (!lightbox.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') { lbIndex = (lbIndex - 1 + lbItems.length) % lbItems.length; showLbItem(); }
+  if (e.key === 'ArrowRight') { lbIndex = (lbIndex + 1) % lbItems.length; showLbItem(); }
+});
+
+// Touch swipe for lightbox
+let lbTouchX = 0;
+lightbox.addEventListener('touchstart', e => { lbTouchX = e.touches[0].clientX; }, {passive:true});
+lightbox.addEventListener('touchend', e => {
+  const diff = e.changedTouches[0].clientX - lbTouchX;
+  if (Math.abs(diff) > 50) {
+    lbIndex = (lbIndex + (diff > 0 ? -1 : 1) + lbItems.length) % lbItems.length;
+    showLbItem();
+  }
+}, {passive:true});
+
+// Attach click to portfolio items
+document.querySelectorAll('.portfolio-item').forEach(item => {
+  item.addEventListener('click', e => {
+    if (e.target.closest('.carousel-arrow') || e.target.closest('.carousel-dot')) return;
+    const imgs = item.querySelectorAll('.carousel-slide');
+    const videos = item.querySelectorAll('video.carousel-video');
+    const caption = item.querySelector('.portfolio-name')?.textContent || '';
+    const media = [];
+    imgs.forEach(img => {
+      if (img.style.display !== 'none' && img.src) media.push({ type: 'image', src: img.src, alt: img.alt, caption });
+    });
+    videos.forEach(vid => {
+      media.push({ type: 'video', src: vid.src, caption });
+    });
+    if (media.length === 0) return;
+    const activeSlide = item.querySelector('.carousel-slide.active');
+    let startIdx = 0;
+    if (activeSlide) {
+      const activeSrc = activeSlide.src;
+      startIdx = media.findIndex(m => m.src === activeSrc);
+      if (startIdx < 0) startIdx = 0;
+    }
+    openLightbox(media, startIdx);
+  });
 });
 </script>
 
