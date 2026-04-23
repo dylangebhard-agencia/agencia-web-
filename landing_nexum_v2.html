@@ -1692,8 +1692,9 @@ footer {
     <!-- PROTAGONICO -->
     <div class="portfolio-item" data-servicio="marketing,complementarios" data-rubro="retail" data-ciudad="santiago">
       <div class="portfolio-carousel" style="background:linear-gradient(135deg,#7C3AED 0%,#D946EF 100%)">
-        <img src="assets/portfolio/protagonico/09092024-DSC05813.jpg" alt="Protagónico" class="carousel-slide active">
-        <img src="assets/portfolio/protagonico/09092024-DSC05885.jpg" alt="Protagónico" class="carousel-slide">
+        <img src="assets/portfolio/protagonico/09092024-DSC05813.jpg" alt="Protagónico" class="carousel-slide active" onerror="this.style.display='none'">
+        <img src="assets/portfolio/protagonico/09092024-DSC05885.jpg" alt="Protagónico" class="carousel-slide" onerror="this.style.display='none'">
+        <div class="carousel-placeholder" style="display:none"><div class="portfolio-brand">PROTAGÓNICO</div></div>
         <div class="carousel-dots">
           <button class="carousel-dot active"></button>
           <button class="carousel-dot"></button>
@@ -1715,8 +1716,9 @@ footer {
     <!-- CLINICA DENTAL -->
     <div class="portfolio-item" data-servicio="presencia,complementarios" data-rubro="salud" data-ciudad="santiago">
       <div class="portfolio-carousel" style="background:linear-gradient(135deg,#06B6D4 0%,#7C3AED 100%)">
-        <img src="assets/portfolio/clinica-dental/DSC01547.jpg" alt="Clínica Dental" class="carousel-slide active">
-        <img src="assets/portfolio/clinica-dental/DSC01550.jpg" alt="Clínica Dental" class="carousel-slide">
+        <img src="assets/portfolio/clinica-dental/DSC01547.jpg" alt="Clínica Dental" class="carousel-slide active" onerror="this.style.display='none'">
+        <img src="assets/portfolio/clinica-dental/DSC01550.jpg" alt="Clínica Dental" class="carousel-slide" onerror="this.style.display='none'">
+        <div class="carousel-placeholder" style="display:none"><div class="portfolio-brand">CLÍNICA DENTAL</div></div>
         <div class="carousel-dots">
           <button class="carousel-dot active"></button>
           <button class="carousel-dot"></button>
@@ -2027,9 +2029,28 @@ function applyPortfolioFilters() {
   }
 }
 
+// ── IMAGE FALLBACK ──
+document.querySelectorAll('.portfolio-carousel').forEach(carousel => {
+  const imgs = carousel.querySelectorAll('img.carousel-slide');
+  const ph = carousel.querySelector('.carousel-placeholder');
+  let failed = 0;
+  imgs.forEach(img => {
+    img.addEventListener('error', () => {
+      failed++;
+      img.style.display = 'none';
+      if (failed >= imgs.length && ph) ph.style.display = 'flex';
+    });
+    if (img.complete && img.naturalWidth === 0) {
+      failed++;
+      img.style.display = 'none';
+      if (failed >= imgs.length && ph) ph.style.display = 'flex';
+    }
+  });
+});
+
 // ── PORTFOLIO CAROUSEL ──
 document.querySelectorAll('.portfolio-carousel').forEach(carousel => {
-  const slides = carousel.querySelectorAll('.carousel-slide');
+  const slides = [...carousel.querySelectorAll('.carousel-slide')].filter(s => s.style.display !== 'none');
   const dots = carousel.querySelectorAll('.carousel-dot');
   if (slides.length <= 1) {
     carousel.querySelectorAll('.carousel-arrow, .carousel-dots').forEach(el => el.style.display = 'none');
