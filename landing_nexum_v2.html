@@ -1204,13 +1204,21 @@ section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
   overflow: hidden; background: #000;
 }
 .carousel-vimeo-slide.active { opacity: 1; z-index: 1; }
-.vimeo-play-icon {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-  width: 56px; height: 56px; border-radius: 50%;
-  background: rgba(124,58,237,0.85); color: #fff;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; z-index: 2; pointer-events: none;
-  box-shadow: 0 4px 20px rgba(124,58,237,0.4);
+.carousel-vimeo-slide iframe {
+  position: absolute; top: 50%; left: 50%;
+  width: 225%; height: 100%;
+  transform: translate(-50%, -50%);
+  border: none;
+}
+.vimeo-click-overlay {
+  position: absolute; inset: 0; z-index: 2; cursor: pointer;
+}
+.vimeo-sound-hint {
+  position: absolute; bottom: 14px; right: 14px; z-index: 3;
+  padding: 5px 12px; border-radius: 99px;
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+  color: #fff; font-size: 10px; font-weight: 600; letter-spacing: .04em;
+  pointer-events: none;
 }
 .portfolio-video-badge {
   position: absolute; top: 10px; right: 10px; z-index: 2;
@@ -1765,8 +1773,9 @@ footer {
         <img src="https://raw.githubusercontent.com/dylangebhard-agencia/agencia-web-/main/assets/portfolio/protagonico/09092024-DSC05813.jpg" alt="Protagónico" class="carousel-slide active">
         <img src="https://raw.githubusercontent.com/dylangebhard-agencia/agencia-web-/main/assets/portfolio/protagonico/09092024-DSC05885.jpg" alt="Protagónico" class="carousel-slide">
         <div class="carousel-slide carousel-vimeo-slide" data-vimeo-id="1016174464">
-          <iframe src="https://player.vimeo.com/video/1016174464?background=1&muted=1&autoplay=0&loop=1" allow="autoplay" style="width:100%;height:100%;border:none;position:absolute;inset:0;pointer-events:none"></iframe>
-          <div class="vimeo-play-icon">&#9654;</div>
+          <iframe src="https://player.vimeo.com/video/1016174464?background=1&autoplay=1&loop=1&muted=1" allow="autoplay" loading="lazy"></iframe>
+          <div class="vimeo-click-overlay"></div>
+          <span class="vimeo-sound-hint">Click para sonido</span>
         </div>
         <span class="portfolio-video-badge">&#9654; VIDEO</span>
         <div class="carousel-dots">
