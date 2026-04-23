@@ -1,0 +1,6 @@
+{
+  "framework": null,
+  "installCommand": "true",
+  "buildCommand": "mkdir -p out && cp index.html out/ && cp -r assets out/",
+  "outputDirectory": "out"
+}
