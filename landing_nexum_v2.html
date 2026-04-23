@@ -1751,8 +1751,10 @@ footer {
         <img src="assets/portfolio/protagonico/09092024-DSC05813.jpg" alt="Protagónico" class="carousel-slide active" onerror="this.style.display='none'">
         <img src="assets/portfolio/protagonico/09092024-DSC05885.jpg" alt="Protagónico" class="carousel-slide" onerror="this.style.display='none'">
         <div class="carousel-placeholder" style="display:none"><div class="portfolio-brand">PROTAGÓNICO</div></div>
+        <span class="portfolio-video-badge">&#9654; VIDEO</span>
         <div class="carousel-dots">
           <button class="carousel-dot active"></button>
+          <button class="carousel-dot"></button>
           <button class="carousel-dot"></button>
         </div>
         <button class="carousel-arrow carousel-prev">&lsaquo;</button>
@@ -1767,6 +1769,7 @@ footer {
         <h3 class="portfolio-name">Protagónico</h3>
         <p class="portfolio-desc">Contenido audiovisual mensual para redes sociales</p>
       </div>
+      <div class="portfolio-vimeo-data" data-vimeo-id="1016174464" style="display:none"></div>
     </div>
 
     <!-- CLINICA DENTAL -->
@@ -2169,16 +2172,19 @@ function openLightbox(items, startIndex) {
 
 function closeLightbox() {
   lightbox.classList.remove('open');
-  setTimeout(() => { lightbox.style.display = 'none'; }, 300);
+  setTimeout(() => {
+    lightbox.style.display = 'none';
+    lightbox.querySelector('.lightbox-content').innerHTML = '';
+  }, 300);
   document.body.style.overflow = '';
-  const vid = lightbox.querySelector('video');
-  if (vid) vid.pause();
 }
 
 function showLbItem() {
   const item = lbItems[lbIndex];
   const content = lightbox.querySelector('.lightbox-content');
-  if (item.type === 'video') {
+  if (item.type === 'vimeo') {
+    content.innerHTML = `<iframe class="lightbox-media" src="https://player.vimeo.com/video/${item.vimeoId}?autoplay=1&title=0&byline=0&portrait=0" style="width:min(90vw,800px);height:min(80vh,450px);border:none;border-radius:12px" allow="autoplay;fullscreen" allowfullscreen></iframe>`;
+  } else if (item.type === 'video') {
     content.innerHTML = `<video class="lightbox-media" src="${item.src}" controls autoplay playsinline></video>`;
   } else {
     content.innerHTML = `<img class="lightbox-media" src="${item.src}" alt="${item.alt || ''}">`;
@@ -2217,14 +2223,15 @@ lightbox.addEventListener('touchend', e => {
 document.querySelectorAll('.portfolio-item').forEach(item => {
   item.addEventListener('click', e => {
     if (e.target.closest('.carousel-arrow') || e.target.closest('.carousel-dot')) return;
-    const imgs = item.querySelectorAll('.carousel-slide');
-    const videos = item.querySelectorAll('video.carousel-video');
+    const imgs = item.querySelectorAll('img.carousel-slide');
     const caption = item.querySelector('.portfolio-name')?.textContent || '';
     const media = [];
     imgs.forEach(img => {
       if (img.style.display !== 'none' && img.src) media.push({ type: 'image', src: img.src, alt: img.alt, caption });
     });
-    videos.forEach(vid => {
+    const vimeoEl = item.querySelector('[data-vimeo-id]');
+    if (vimeoEl) media.push({ type: 'vimeo', vimeoId: vimeoEl.dataset.vimeoId, caption: caption + ' — Video' });
+    item.querySelectorAll('video.carousel-video').forEach(vid => {
       media.push({ type: 'video', src: vid.src, caption });
     });
     if (media.length === 0) return;
