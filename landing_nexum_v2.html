@@ -1198,6 +1198,20 @@ section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
   color: #fff; font-family: 'Syne', sans-serif; font-size: 16px;
   font-weight: 700; text-align: center; white-space: nowrap;
 }
+.carousel-vimeo-slide {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  opacity: 0; transition: opacity .6s ease; z-index: 0;
+  overflow: hidden; background: #000;
+}
+.carousel-vimeo-slide.active { opacity: 1; z-index: 1; }
+.vimeo-play-icon {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(124,58,237,0.85); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; z-index: 2; pointer-events: none;
+  box-shadow: 0 4px 20px rgba(124,58,237,0.4);
+}
 .portfolio-video-badge {
   position: absolute; top: 10px; right: 10px; z-index: 2;
   padding: 4px 10px; border-radius: 99px;
@@ -1748,9 +1762,12 @@ footer {
     <!-- PROTAGONICO -->
     <div class="portfolio-item" data-servicio="marketing,complementarios" data-rubro="retail" data-ciudad="santiago">
       <div class="portfolio-carousel" style="background:linear-gradient(135deg,#7C3AED 0%,#D946EF 100%)">
-        <img src="assets/portfolio/protagonico/09092024-DSC05813.jpg" alt="Protagónico" class="carousel-slide active" onerror="this.style.display='none'">
-        <img src="assets/portfolio/protagonico/09092024-DSC05885.jpg" alt="Protagónico" class="carousel-slide" onerror="this.style.display='none'">
-        <div class="carousel-placeholder" style="display:none"><div class="portfolio-brand">PROTAGÓNICO</div></div>
+        <img src="https://raw.githubusercontent.com/dylangebhard-agencia/agencia-web-/main/assets/portfolio/protagonico/09092024-DSC05813.jpg" alt="Protagónico" class="carousel-slide active">
+        <img src="https://raw.githubusercontent.com/dylangebhard-agencia/agencia-web-/main/assets/portfolio/protagonico/09092024-DSC05885.jpg" alt="Protagónico" class="carousel-slide">
+        <div class="carousel-slide carousel-vimeo-slide" data-vimeo-id="1016174464">
+          <iframe src="https://player.vimeo.com/video/1016174464?background=1&muted=1&autoplay=0&loop=1" allow="autoplay" style="width:100%;height:100%;border:none;position:absolute;inset:0;pointer-events:none"></iframe>
+          <div class="vimeo-play-icon">&#9654;</div>
+        </div>
         <span class="portfolio-video-badge">&#9654; VIDEO</span>
         <div class="carousel-dots">
           <button class="carousel-dot active"></button>
@@ -1769,14 +1786,13 @@ footer {
         <h3 class="portfolio-name">Protagónico</h3>
         <p class="portfolio-desc">Contenido audiovisual mensual para redes sociales</p>
       </div>
-      <div class="portfolio-vimeo-data" data-vimeo-id="1016174464" style="display:none"></div>
     </div>
 
     <!-- CLINICA DENTAL -->
     <div class="portfolio-item" data-servicio="presencia,complementarios" data-rubro="salud" data-ciudad="santiago">
       <div class="portfolio-carousel" style="background:linear-gradient(135deg,#06B6D4 0%,#7C3AED 100%)">
-        <img src="assets/portfolio/clinica-dental/DSC01547.jpg" alt="Clínica Dental" class="carousel-slide active" onerror="this.style.display='none'">
-        <img src="assets/portfolio/clinica-dental/DSC01550.jpg" alt="Clínica Dental" class="carousel-slide" onerror="this.style.display='none'">
+        <img src="https://raw.githubusercontent.com/dylangebhard-agencia/agencia-web-/main/assets/portfolio/clinica-dental/DSC01547.jpg" alt="Clínica Dental" class="carousel-slide active">
+        <img src="https://raw.githubusercontent.com/dylangebhard-agencia/agencia-web-/main/assets/portfolio/clinica-dental/DSC01550.jpg" alt="Clínica Dental" class="carousel-slide">
         <div class="carousel-placeholder" style="display:none"><div class="portfolio-brand">CLÍNICA DENTAL</div></div>
         <div class="carousel-dots">
           <button class="carousel-dot active"></button>
@@ -2223,16 +2239,15 @@ lightbox.addEventListener('touchend', e => {
 document.querySelectorAll('.portfolio-item').forEach(item => {
   item.addEventListener('click', e => {
     if (e.target.closest('.carousel-arrow') || e.target.closest('.carousel-dot')) return;
-    const imgs = item.querySelectorAll('img.carousel-slide');
     const caption = item.querySelector('.portfolio-name')?.textContent || '';
     const media = [];
-    imgs.forEach(img => {
-      if (img.style.display !== 'none' && img.src) media.push({ type: 'image', src: img.src, alt: img.alt, caption });
-    });
-    const vimeoEl = item.querySelector('[data-vimeo-id]');
-    if (vimeoEl) media.push({ type: 'vimeo', vimeoId: vimeoEl.dataset.vimeoId, caption: caption + ' — Video' });
-    item.querySelectorAll('video.carousel-video').forEach(vid => {
-      media.push({ type: 'video', src: vid.src, caption });
+    item.querySelectorAll('.carousel-slide').forEach(slide => {
+      if (slide.style.display === 'none') return;
+      if (slide.tagName === 'IMG' && slide.src) {
+        media.push({ type: 'image', src: slide.src, alt: slide.alt, caption });
+      } else if (slide.dataset.vimeoId) {
+        media.push({ type: 'vimeo', vimeoId: slide.dataset.vimeoId, caption: caption + ' — Video' });
+      }
     });
     if (media.length === 0) return;
     const activeSlide = item.querySelector('.carousel-slide.active');
